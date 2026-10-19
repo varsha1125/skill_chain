@@ -1,0 +1,9 @@
+# ===================================================================
+# Database Configuration Template for Skill Chain
+# ===================================================================
+# Copy this file to 'config.properties' and fill in your MySQL credentials.
+# Note: config.properties is ignored by git to keep your password secure.
+
+db.url=jdbc:mysql://localhost:3306/skill_chain_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+db.user=root
+db.password=your_mysql_password_here

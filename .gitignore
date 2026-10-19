@@ -1,0 +1,19 @@
+# Compiled class files
+target/
+*.class
+
+# Configuration files with private database credentials
+config.properties
+
+# IDE specific metadata
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
