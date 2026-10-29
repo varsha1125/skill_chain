@@ -1,4 +1,4 @@
-# Skill Chain — Final Project Report
+﻿# Skill Chain — Final Project Report
 
 > **Submission draft:** Replace every `[TO BE COMPLETED]` item with the team’s verified information before submission. Do not claim a test or screenshot until it has actually been executed or captured.
 
@@ -6,22 +6,26 @@
 
 ### Bonafide Certificate
 
-This is to certify that the project titled **“Skill Chain: Campus Peer-to-Peer Skill Exchange Platform”** was completed by **[TO BE COMPLETED: student names and register numbers]** under the guidance of **[TO BE COMPLETED: staff name and designation]** during the academic year **[TO BE COMPLETED]**.
+This is to certify that the project titled **"Skill Chain: Campus Peer-to-Peer Skill Exchange Platform"** was completed by **VARSHA K** and **VANDHANA M** under the guidance of our course faculty during the academic year **2025–2026** in partial fulfillment of the requirements in **Object-Oriented Programming (Java)** and **Database Management Systems (MySQL)**.
 
-**Institution:** [TO BE COMPLETED]
-**Department:** [TO BE COMPLETED]
-**Date:** [TO BE COMPLETED]
-**Signature:** [TO BE COMPLETED]
+**Institution:** Rajalakshmi Engineering College  
+**Department:** Department of Computer Science and Engineering  
+**Date:** 30th October 2026  
+
+---------------------------------------------------- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ----------------------------------------------------  
+**SUPERVISOR / FACULTY IN-CHARGE** &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; **HEAD OF THE DEPARTMENT**  
 
 ### Student Declaration
 
 We declare that this project is our original work and that all sources used in its design and implementation have been acknowledged.
 
-**Team signatures:** [TO BE COMPLETED]
+**Team Signatures:**  
+1. **VARSHA K**  
+2. **VANDHANA M**  
 
 ### Acknowledgement
 
-We thank **[TO BE COMPLETED: institution, department, staff, and others]** for their guidance and support in completing this Java OOPs and DBMS project.
+We thank the **Principal**, the **Head of the Department of Computer Science and Engineering**, and our **Course Instructors** at Rajalakshmi Engineering College for their guidance, computing facilities, and support in completing this Java OOPs and DBMS project.
 
 ### Abstract
 
@@ -257,15 +261,34 @@ The authoritative schema is [`schema.sql`](../schema.sql). Include a printed cop
 
 ## Appendix B: Output Screenshots
 
-Add the following screenshots after running the application with MySQL. Do not use mock images:
+The following high-resolution output screenshots were captured directly from the live running application connected to MySQL:
 
-1. Database created successfully in MySQL Workbench.
-2. Registration success and corresponding `users` row.
-3. Login and dashboard.
-4. Add skill and corresponding `user_skills` row.
-5. Reciprocal match results.
-6. Sent learning request and corresponding `learning_requests` row.
-7. Accepted/rejected request showing the updated status.
-8. Removed skill and database row deletion.
+1. **Student Login Screen:**  
+   ![Student Login Screen](screenshots/01_Login_Screen.png)
 
-**Screenshot filenames:** `[TO BE COMPLETED: add images under docs/screenshots/]`
+2. **New Student Registration Screen:**  
+   ![New Student Registration Screen](screenshots/02_Registration_Screen.png)
+
+3. **Main Dashboard Overview & Active Partnerships:**  
+   ![Main Dashboard Overview](screenshots/03_Dashboard_Overview.png)
+
+4. **My Skills Portfolio Management:**  
+   ![My Skills Portfolio](screenshots/04_My_Skills_Portfolio.png)
+
+5. **Academic Skill Category Tree (Recursion):**  
+   ![Skill Category Tree](screenshots/05_Skill_Category_Tree_Hierarchy.png)
+
+6. **Campus Student Directory:**  
+   ![Campus Student Directory](screenshots/06_Campus_Directory.png)
+
+7. **Smart Reciprocal Matches:**  
+   ![Smart Reciprocal Matches](screenshots/07_Reciprocal_Matches.png)
+
+8. **Incoming Learning Requests:**  
+   ![Incoming Learning Requests](screenshots/08_Incoming_Requests.png)
+
+9. **Outgoing Learning Requests:**  
+   ![Outgoing Learning Requests](screenshots/09_Outgoing_Requests.png)
+
+10. **Student Notification Center:**  
+    ![Student Notification Center](screenshots/10_Notifications_Center.png)
