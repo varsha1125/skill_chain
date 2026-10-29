@@ -2,8 +2,10 @@ package com.skillchain.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -109,6 +111,43 @@ public final class DatabaseConnection {
             return conn != null && !conn.isClosed();
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    /**
+     * Returns a setup problem without throwing it into the Swing event flow.
+     * A null result means the configuration file is readable and the JDBC
+     * driver is available; it does not guarantee that MySQL is running.
+     */
+    public static String getConfigurationIssue() {
+        try {
+            initialize();
+            return null;
+        } catch (DatabaseException e) {
+            return e.getMessage();
+        }
+    }
+
+    /**
+     * Saves local MySQL settings entered by the user in the setup dialog.
+     * The file is ignored by Git and is never bundled into the repository.
+     */
+    public static synchronized void saveConfiguration(String url, String user, String password) {
+        if (url == null || url.isBlank() || user == null || user.isBlank()) {
+            throw new DatabaseException("Database URL and username are required.");
+        }
+
+        Properties properties = new Properties();
+        properties.setProperty("db.url", url.trim());
+        properties.setProperty("db.user", user.trim());
+        properties.setProperty("db.password", password == null ? "" : password);
+
+        try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
+            properties.store(output, "Skill Chain local database configuration");
+            initialized = false;
+            initialize();
+        } catch (IOException e) {
+            throw new DatabaseException("Unable to save config.properties: " + e.getMessage(), e);
         }
     }
 

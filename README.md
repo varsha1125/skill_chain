@@ -21,16 +21,16 @@ This project is built to demonstrate enterprise-grade **Object-Oriented Programm
 
 | OOP Concept | Project Implementation | File Reference |
 | :--- | :--- | :--- |
-| **Abstraction** | Abstract base class `Person` defining template methods (`getRole()`, `getSummary()`). | [`Person.java`](file:///src/main/java/com/skillchain/model/Person.java) |
-| **Inheritance** | `User` inherits identity attributes and common methods from `Person`. | [`User.java`](file:///src/main/java/com/skillchain/model/User.java) |
-| **Encapsulation** | Strict private fields with validated public getters/setters throughout all domain models. | [`User.java`](file:///src/main/java/com/skillchain/model/User.java), [`Skill.java`](file:///src/main/java/com/skillchain/model/Skill.java) |
-| **Polymorphism (Runtime / Overriding)** | `User` overrides `getRole()` and `getSummary()` defined in abstract `Person`. | [`User.java`](file:///src/main/java/com/skillchain/model/User.java) |
-| **Polymorphism (Compile-time / Overloading)** | Overloaded methods in DAO and Service layers (`search(keyword)` vs `search(keyword, category)`). | [`SkillDao.java`](file:///src/main/java/com/skillchain/dao/SkillDao.java) |
-| **Interfaces & Generics** | Generic interface `Searchable<T>` implemented by data access contracts. | [`Searchable.java`](file:///src/main/java/com/skillchain/dao/Searchable.java) |
-| **Composition** | `UserSkill` and `LearningRequest` compose relationships between `User` and `Skill` entities. | [`UserSkill.java`](file:///src/main/java/com/skillchain/model/UserSkill.java) |
-| **Custom Exception Hierarchy** | Application-specific checked and unchecked exceptions for domain errors. | [`DuplicateEmailException.java`](file:///src/main/java/com/skillchain/util/DuplicateEmailException.java)<br>[`DuplicateSkillException.java`](file:///src/main/java/com/skillchain/util/DuplicateSkillException.java)<br>[`InvalidLoginException.java`](file:///src/main/java/com/skillchain/util/InvalidLoginException.java) |
-| **Data Structures & Recursion** | Multi-branch N-ary Category Tree traversed recursively to generate academic taxonomy views. | [`SkillTreeUtil.java`](file:///src/main/java/com/skillchain/util/SkillTreeUtil.java) |
-| **Security & Hashing** | Cryptographically salted SHA-256 password hashing for safe credential storage. | [`PasswordUtil.java`](file:///src/main/java/com/skillchain/util/PasswordUtil.java) |
+| **Abstraction** | Abstract base class `Person` defining template methods (`getRole()`, `getSummary()`). | [`Person.java`](src/main/java/com/skillchain/model/Person.java) |
+| **Inheritance** | `User` inherits identity attributes and common methods from `Person`. | [`User.java`](src/main/java/com/skillchain/model/User.java) |
+| **Encapsulation** | Strict private fields with validated public getters/setters throughout all domain models. | [`User.java`](src/main/java/com/skillchain/model/User.java), [`Skill.java`](src/main/java/com/skillchain/model/Skill.java) |
+| **Polymorphism (Runtime / Overriding)** | `User` overrides `getRole()` and `getSummary()` defined in abstract `Person`. | [`User.java`](src/main/java/com/skillchain/model/User.java) |
+| **Polymorphism (Compile-time / Overloading)** | Overloaded methods in DAO and Service layers (`search(keyword)` vs `search(keyword, category)`). | [`SkillDao.java`](src/main/java/com/skillchain/dao/SkillDao.java) |
+| **Interfaces & Generics** | Generic interface `Searchable<T>` implemented by data access contracts. | [`Searchable.java`](src/main/java/com/skillchain/dao/Searchable.java) |
+| **Composition** | `UserSkill` and `LearningRequest` compose relationships between `User` and `Skill` entities. | [`UserSkill.java`](src/main/java/com/skillchain/model/UserSkill.java) |
+| **Custom Exception Hierarchy** | Application-specific checked and unchecked exceptions for domain errors. | [`DuplicateEmailException.java`](src/main/java/com/skillchain/util/DuplicateEmailException.java)<br>[`DuplicateSkillException.java`](src/main/java/com/skillchain/util/DuplicateSkillException.java)<br>[`InvalidLoginException.java`](src/main/java/com/skillchain/util/InvalidLoginException.java) |
+| **Data Structures & Recursion** | Multi-branch N-ary Category Tree traversed recursively to generate academic taxonomy views. | [`SkillTreeUtil.java`](src/main/java/com/skillchain/util/SkillTreeUtil.java) |
+| **Security & Hashing** | Cryptographically salted SHA-256 password hashing for safe credential storage. | [`PasswordUtil.java`](src/main/java/com/skillchain/util/PasswordUtil.java) |
 
 ---
 
@@ -74,19 +74,23 @@ The database schema (`skill_chain_db`) contains 4 normalized relational tables w
 * **MySQL Server 8.0+** running on `localhost:3306`
 
 ### Step 1: Initialize Database
-Open MySQL Workbench and execute [`schema.sql`](file:///schema.sql). This creates the database, all four tables, and populates initial demo accounts and skills.
+Open MySQL Workbench and execute [`schema.sql`](schema.sql). This creates the database, all four tables, and populates initial demo accounts and skills.
 
 ### Step 2: Configure Credentials
-Ensure [`config.properties`](file:///config.properties) matches your local MySQL setup:
+Copy [`config.properties.example`](config.properties.example) to `config.properties`, then fill in your local MySQL credentials:
 ```properties
 db.url=jdbc:mysql://localhost:3306/skill_chain_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 db.user=root
-db.password=root
+db.password=your_mysql_password_here
 ```
 
+You can also launch the application first and use the **CONFIGURE DATABASE** button on the login screen. It saves the same local `config.properties` file without exposing the password in the repository.
+
 ### Step 3: Compile and Launch
-* To recompile sources: Double-click **[`build.bat`](file:///build.bat)**
-* To run the desktop application: Double-click **[`run.bat`](file:///run.bat)**
+* To recompile sources on Windows: Double-click **[`build.bat`](build.bat)**
+* To run the desktop application on Windows: Double-click **[`run.bat`](run.bat)**
+* To compile and run the database-independent OOP verification: Double-click **[`verify.bat`](verify.bat)**
+* With Maven installed: run `mvn clean compile` and then `mvn exec:java`
 
 ---
 
@@ -122,3 +126,15 @@ All demo student accounts are configured with the password: **`Password123!`**
 5. **Learning Requests Tab:**
    * Accept or decline incoming swap proposals.
    * Monitor the status of outgoing proposals.
+
+---
+
+## 📄 7. Final Report and Verification Documents
+
+The complete report draft, diagrams, CRUD mapping, and verification plan are available in the [`docs`](docs) folder:
+
+* [`FINAL_PROJECT_REPORT.md`](docs/FINAL_PROJECT_REPORT.md)
+* [`TEST_PLAN.md`](docs/TEST_PLAN.md)
+* [`CRUD_DEMONSTRATION.md`](docs/CRUD_DEMONSTRATION.md)
+
+The report still requires the team-specific certificate/declaration details and real screenshots captured while the application is connected to MySQL.

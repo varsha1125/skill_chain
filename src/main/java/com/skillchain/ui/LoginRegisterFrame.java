@@ -3,74 +3,61 @@ package com.skillchain.ui;
 import com.skillchain.model.User;
 import com.skillchain.service.UserService;
 import com.skillchain.util.DatabaseConnection;
+import com.skillchain.util.DatabaseException;
 import com.skillchain.util.DuplicateEmailException;
 import com.skillchain.util.InvalidLoginException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 import java.sql.SQLException;
 
 /**
- * ============================================================================
- * SCREEN 1: LOGIN & REGISTRATION FRAME (ENHANCED UI/UX)
- * ============================================================================
- * Redesigned with modern visual design:
- * - Pure Java2D vector logo banner (no broken emoji glyphs)
- * - Segmented pill switch navigation
- * - Rounded input fields with interactive focus rings
- * - Custom painted high-contrast buttons with smooth hover animations
- * - Live database status pill indicator
+ * Login and registration screen for Skill Chain.
+ *
+ * The screen is deliberately compact and graphic: the form deck is anchored
+ * to its preferred height, so resizing the window does not create a giant
+ * empty white area. Database setup is available inside the app rather than
+ * being exposed as a confusing raw exception dialog.
  */
 public class LoginRegisterFrame extends JFrame {
 
     private final UserService userService;
-
-    // Login Form Components
     private ModernTextField txtLoginEmail;
     private ModernPasswordField txtLoginPassword;
-
-    // Register Form Components
     private ModernTextField txtRegName;
     private ModernTextField txtRegEmail;
     private ModernPasswordField txtRegPassword;
     private ModernPasswordField txtRegConfirmPassword;
-
-    // Navigation Switcher & Card Container
     private SegmentedSwitch tabSwitch;
     private JPanel cardContainer;
     private CardLayout cardLayout;
-
-    // Status label
     private JLabel lblDbStatus;
     private JPanel statusPill;
+    private ModernButton btnLoginAction;
+    private ModernButton btnRegisterAction;
 
     public LoginRegisterFrame() {
-        this.userService = new UserService();
+        userService = new UserService();
         initUI();
         checkDatabaseStatus();
     }
 
     private void initUI() {
-        setTitle("Skill Chain - Student Skill Exchange Platform");
+        setTitle("Skill Chain / Campus Skill Exchange");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(520, 710);
-        setMinimumSize(new Dimension(480, 680));
+        setSize(620, 760);
+        setMinimumSize(new Dimension(560, 700));
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(248, 250, 252)); // Slate-50
+        getContentPane().setBackground(UITheme.COLOR_BG);
         setLayout(new BorderLayout());
 
-        // 1. Vector Logo & Title Header Banner
-        BrandHeaderPanel headerBanner = new BrandHeaderPanel();
-        add(headerBanner, BorderLayout.NORTH);
+        add(new BrandHeaderPanel(), BorderLayout.NORTH);
 
-        // 2. Main Content Center Wrapper
         JPanel centerWrapper = new JPanel(new BorderLayout());
-        centerWrapper.setBackground(new Color(248, 250, 252));
-        centerWrapper.setBorder(new EmptyBorder(16, 28, 16, 28));
+        centerWrapper.setBackground(UITheme.COLOR_BG);
+        centerWrapper.setBorder(new EmptyBorder(18, 34, 12, 34));
 
-        // Segmented Pill Tab Switcher: [ Sign In ] [ Create Account ]
         JPanel switchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         switchPanel.setOpaque(false);
         switchPanel.setBorder(new EmptyBorder(0, 0, 16, 0));
@@ -78,261 +65,167 @@ public class LoginRegisterFrame extends JFrame {
         cardLayout = new CardLayout();
         cardContainer = new JPanel(cardLayout);
         cardContainer.setOpaque(false);
+        cardContainer.add(createLoginCard(), "LOGIN");
+        cardContainer.add(createRegisterCard(), "REGISTER");
 
-        tabSwitch = new SegmentedSwitch(new String[]{"Sign In", "Create Account"}, index -> {
-            if (index == 0) {
-                cardLayout.show(cardContainer, "LOGIN");
-            } else {
-                cardLayout.show(cardContainer, "REGISTER");
-            }
+        tabSwitch = new SegmentedSwitch(new String[]{"SIGN IN", "CREATE ACCOUNT"}, index -> {
+            cardLayout.show(cardContainer, index == 0 ? "LOGIN" : "REGISTER");
         });
         switchPanel.add(tabSwitch);
         centerWrapper.add(switchPanel, BorderLayout.NORTH);
 
-        // Add Forms to Card Container
-        cardContainer.add(createLoginCard(), "LOGIN");
-        cardContainer.add(createRegisterCard(), "REGISTER");
-        centerWrapper.add(cardContainer, BorderLayout.CENTER);
-
+        // Anchor the form deck to its preferred height instead of stretching it.
+        JPanel formDeck = new JPanel(new BorderLayout());
+        formDeck.setOpaque(false);
+        formDeck.add(cardContainer, BorderLayout.NORTH);
+        centerWrapper.add(formDeck, BorderLayout.CENTER);
         add(centerWrapper, BorderLayout.CENTER);
 
-        // 3. Footer with Status Pill Badge
-        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        footerPanel.setBackground(new Color(248, 250, 252));
-        footerPanel.setBorder(new EmptyBorder(8, 16, 16, 16));
+        JPanel footerPanel = new JPanel(new BorderLayout(12, 0));
+        footerPanel.setBackground(UITheme.COLOR_BG);
+        footerPanel.setBorder(new EmptyBorder(8, 34, 18, 34));
 
-        statusPill = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 4)) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                int w = getWidth();
-                int h = getHeight();
-                g2.setColor(new Color(236, 253, 245)); // Soft emerald
-                g2.fill(new RoundRectangle2D.Float(0, 0, w, h, 14, 14));
-                g2.setColor(new Color(167, 243, 208)); // Border
-                g2.setStroke(new BasicStroke(1.0f));
-                g2.draw(new RoundRectangle2D.Float(0, 0, w - 1, h - 1, 14, 14));
-                g2.dispose();
-            }
-        };
-        statusPill.setOpaque(false);
-        statusPill.setBorder(new EmptyBorder(2, 10, 2, 10));
-
-        lblDbStatus = new JLabel("Connecting to MySQL...");
-        lblDbStatus.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        lblDbStatus.setForeground(new Color(5, 150, 105)); // Emerald
+        statusPill = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 7));
+        statusPill.setOpaque(true);
+        statusPill.setBackground(UITheme.COLOR_PRIMARY);
+        statusPill.setBorder(BorderFactory.createLineBorder(UITheme.COLOR_INK, 2));
+        lblDbStatus = new JLabel("CHECKING DATABASE...");
+        lblDbStatus.setFont(UITheme.FONT_BODY_BOLD);
+        lblDbStatus.setForeground(UITheme.COLOR_INK);
         statusPill.add(lblDbStatus);
 
-        footerPanel.add(statusPill);
+        ModernButton btnSetup = new ModernButton("CONFIGURE DATABASE", ModernButton.ButtonStyle.SECONDARY);
+        btnSetup.setToolTipText("Enter your local MySQL connection settings");
+        btnSetup.addActionListener(e -> openDatabaseSetupDialog());
+        footerPanel.add(statusPill, BorderLayout.CENTER);
+        footerPanel.add(btnSetup, BorderLayout.EAST);
         add(footerPanel, BorderLayout.SOUTH);
     }
 
     private JPanel createLoginCard() {
         JPanel card = UITheme.createCardPanel();
         card.setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 6, 5, 6);
-        gbc.weightx = 1.0;
+        GridBagConstraints gbc = formConstraints();
         int row = 0;
 
-        JLabel lblTitle = new JLabel("Welcome Back");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        lblTitle.setForeground(UITheme.COLOR_TEXT_PRIMARY);
-        gbc.gridx = 0;
+        JLabel title = label("WELCOME BACK", UITheme.FONT_TITLE, UITheme.COLOR_TEXT_PRIMARY);
         gbc.gridy = row++;
-        card.add(lblTitle, gbc);
-
-        JLabel lblPrompt = new JLabel("Sign in to exchange skills with campus peers.");
-        lblPrompt.setFont(UITheme.FONT_BODY);
-        lblPrompt.setForeground(UITheme.COLOR_TEXT_MUTED);
+        card.add(title, gbc);
+        JLabel prompt = label("Sign in and find your next skill exchange.", UITheme.FONT_BODY, UITheme.COLOR_TEXT_MUTED);
         gbc.gridy = row++;
-        gbc.insets = new Insets(0, 6, 12, 6);
-        card.add(lblPrompt, gbc);
+        gbc.insets = new Insets(0, 6, 16, 6);
+        card.add(prompt, gbc);
 
-        // Email Label & Modern Field
         gbc.insets = new Insets(4, 6, 2, 6);
-        JLabel lblEmail = new JLabel("Email Address");
-        lblEmail.setFont(UITheme.FONT_BODY_BOLD);
-        lblEmail.setForeground(new Color(51, 65, 85));
-        gbc.gridy = row++;
-        card.add(lblEmail, gbc);
-
+        card.add(label("EMAIL ADDRESS", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
         txtLoginEmail = new ModernTextField("e.g. alice@university.edu");
-        txtLoginEmail.setText("alice@university.edu"); // Convenience pre-fill for demo
-        gbc.gridy = row++;
-        gbc.insets = new Insets(2, 6, 10, 6);
-        card.add(txtLoginEmail, gbc);
+        txtLoginEmail.setText("alice@university.edu");
+        gbc.insets = new Insets(2, 6, 12, 6);
+        card.add(txtLoginEmail, at(gbc, row++));
 
-        // Password Label & Modern Field
         gbc.insets = new Insets(4, 6, 2, 6);
-        JLabel lblPassword = new JLabel("Password");
-        lblPassword.setFont(UITheme.FONT_BODY_BOLD);
-        lblPassword.setForeground(new Color(51, 65, 85));
-        gbc.gridy = row++;
-        card.add(lblPassword, gbc);
-
+        card.add(label("PASSWORD", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
         txtLoginPassword = new ModernPasswordField("Enter your password");
-        txtLoginPassword.setText("Password123!"); // Convenience pre-fill for demo
-        gbc.gridy = row++;
+        txtLoginPassword.setText("Password123!");
         gbc.insets = new Insets(2, 6, 16, 6);
-        card.add(txtLoginPassword, gbc);
+        card.add(txtLoginPassword, at(gbc, row++));
 
-        // Primary Action Button (Guaranteed high contrast vibrant button)
-        ModernButton btnLogin = new ModernButton("Sign In to Skill Chain", ModernButton.ButtonStyle.PRIMARY);
-        btnLogin.addActionListener(e -> handleLogin());
-        gbc.gridy = row++;
+        btnLoginAction = new ModernButton("SIGN IN TO SKILL CHAIN", ModernButton.ButtonStyle.PRIMARY);
+        btnLoginAction.addActionListener(e -> handleLogin());
         gbc.insets = new Insets(6, 6, 14, 6);
-        card.add(btnLogin, gbc);
+        card.add(btnLoginAction, at(gbc, row++));
 
-        // Helpful pre-seeded accounts badge
         JPanel demoBox = new JPanel();
         demoBox.setLayout(new BoxLayout(demoBox, BoxLayout.Y_AXIS));
-        demoBox.setBackground(new Color(241, 245, 249)); // Slate-100
-        demoBox.setBorder(new EmptyBorder(8, 12, 8, 12));
-
-        JLabel lblHint = new JLabel("Test Account: alice@university.edu / Password123!");
-        lblHint.setFont(new Font("Segoe UI", Font.BOLD, 11));
-        lblHint.setForeground(new Color(71, 85, 105));
-        demoBox.add(lblHint);
-
-        JLabel lblHint2 = new JLabel("Reciprocal Partner: bob@university.edu / Password123!");
-        lblHint2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        lblHint2.setForeground(new Color(100, 116, 139));
-        demoBox.add(lblHint2);
-
-        gbc.gridy = row++;
-        gbc.insets = new Insets(4, 6, 4, 6);
-        card.add(demoBox, gbc);
-
+        demoBox.setBackground(UITheme.COLOR_SECONDARY);
+        demoBox.setBorder(new CompoundBorderCompat(UITheme.COLOR_INK, 2, 8, 10, 8, 10));
+        demoBox.add(label("DEMO ACCOUNT", UITheme.FONT_BODY_BOLD, UITheme.COLOR_INK));
+        demoBox.add(label("alice@university.edu / Password123!", UITheme.FONT_SMALL, UITheme.COLOR_INK));
+        demoBox.add(label("Try Bob after sending a swap request.", UITheme.FONT_SMALL, UITheme.COLOR_INK));
+        card.add(demoBox, at(gbc, row));
         return card;
     }
 
     private JPanel createRegisterCard() {
         JPanel card = UITheme.createCardPanel();
         card.setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(3, 6, 3, 6);
-        gbc.weightx = 1.0;
+        GridBagConstraints gbc = formConstraints();
         int row = 0;
 
-        JLabel lblTitle = new JLabel("Create Student Account");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        lblTitle.setForeground(UITheme.COLOR_TEXT_PRIMARY);
-        gbc.gridx = 0;
-        gbc.gridy = row++;
-        card.add(lblTitle, gbc);
+        card.add(label("CREATE STUDENT ACCOUNT", UITheme.FONT_TITLE, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
+        gbc.insets = new Insets(0, 6, 10, 6);
+        card.add(label("Build your teaching and learning portfolio.", UITheme.FONT_BODY, UITheme.COLOR_TEXT_MUTED), at(gbc, row++));
 
-        JLabel lblPrompt = new JLabel("Start teaching what you know & learning what you love.");
-        lblPrompt.setFont(UITheme.FONT_BODY);
-        lblPrompt.setForeground(UITheme.COLOR_TEXT_MUTED);
-        gbc.gridy = row++;
-        gbc.insets = new Insets(0, 6, 8, 6);
-        card.add(lblPrompt, gbc);
-
-        // Full Name
-        gbc.insets = new Insets(3, 6, 1, 6);
-        JLabel lblName = new JLabel("Full Name");
-        lblName.setFont(UITheme.FONT_BODY_BOLD);
-        lblName.setForeground(new Color(51, 65, 85));
-        gbc.gridy = row++;
-        card.add(lblName, gbc);
-
+        gbc.insets = new Insets(3, 6, 2, 6);
+        card.add(label("FULL NAME", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
         txtRegName = new ModernTextField("e.g. John Doe");
-        gbc.gridy = row++;
-        gbc.insets = new Insets(1, 6, 6, 6);
-        card.add(txtRegName, gbc);
+        gbc.insets = new Insets(1, 6, 7, 6);
+        card.add(txtRegName, at(gbc, row++));
 
-        // Student Email
-        gbc.insets = new Insets(3, 6, 1, 6);
-        JLabel lblEmail = new JLabel("Student Email");
-        lblEmail.setFont(UITheme.FONT_BODY_BOLD);
-        lblEmail.setForeground(new Color(51, 65, 85));
-        gbc.gridy = row++;
-        card.add(lblEmail, gbc);
-
+        gbc.insets = new Insets(3, 6, 2, 6);
+        card.add(label("STUDENT EMAIL", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
         txtRegEmail = new ModernTextField("e.g. student@university.edu");
-        gbc.gridy = row++;
-        gbc.insets = new Insets(1, 6, 6, 6);
-        card.add(txtRegEmail, gbc);
+        gbc.insets = new Insets(1, 6, 7, 6);
+        card.add(txtRegEmail, at(gbc, row++));
 
-        // Password
-        gbc.insets = new Insets(3, 6, 1, 6);
-        JLabel lblPassword = new JLabel("Password (min 6 characters)");
-        lblPassword.setFont(UITheme.FONT_BODY_BOLD);
-        lblPassword.setForeground(new Color(51, 65, 85));
-        gbc.gridy = row++;
-        card.add(lblPassword, gbc);
+        gbc.insets = new Insets(3, 6, 2, 6);
+        card.add(label("PASSWORD / MIN 6 CHARACTERS", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
+        txtRegPassword = new ModernPasswordField("Enter a password");
+        gbc.insets = new Insets(1, 6, 7, 6);
+        card.add(txtRegPassword, at(gbc, row++));
 
-        txtRegPassword = new ModernPasswordField("Enter strong password");
-        gbc.gridy = row++;
-        gbc.insets = new Insets(1, 6, 6, 6);
-        card.add(txtRegPassword, gbc);
-
-        // Confirm Password
-        gbc.insets = new Insets(3, 6, 1, 6);
-        JLabel lblConfirm = new JLabel("Confirm Password");
-        lblConfirm.setFont(UITheme.FONT_BODY_BOLD);
-        lblConfirm.setForeground(new Color(51, 65, 85));
-        gbc.gridy = row++;
-        card.add(lblConfirm, gbc);
-
+        gbc.insets = new Insets(3, 6, 2, 6);
+        card.add(label("CONFIRM PASSWORD", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
         txtRegConfirmPassword = new ModernPasswordField("Re-type password");
-        gbc.gridy = row++;
-        gbc.insets = new Insets(1, 6, 12, 6);
-        card.add(txtRegConfirmPassword, gbc);
+        gbc.insets = new Insets(1, 6, 14, 6);
+        card.add(txtRegConfirmPassword, at(gbc, row++));
 
-        // Register Button (Guaranteed high-contrast text)
-        ModernButton btnRegister = new ModernButton("Create Student Account", ModernButton.ButtonStyle.PRIMARY);
-        btnRegister.addActionListener(e -> handleRegister());
-        gbc.gridy = row++;
+        btnRegisterAction = new ModernButton("CREATE STUDENT ACCOUNT", ModernButton.ButtonStyle.PRIMARY);
+        btnRegisterAction.addActionListener(e -> handleRegister());
         gbc.insets = new Insets(4, 6, 4, 6);
-        card.add(btnRegister, gbc);
-
+        card.add(btnRegisterAction, at(gbc, row));
         return card;
+    }
+
+    private GridBagConstraints formConstraints() {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.insets = new Insets(5, 6, 5, 6);
+        return gbc;
+    }
+
+    private GridBagConstraints at(GridBagConstraints source, int row) {
+        source.gridy = row;
+        return source;
+    }
+
+    private JLabel label(String text, Font font, Color color) {
+        JLabel label = new JLabel(text);
+        label.setFont(font);
+        label.setForeground(color);
+        return label;
     }
 
     private void handleLogin() {
         String email = txtLoginEmail.getText().trim();
         String password = new String(txtLoginPassword.getPassword());
-
         if (email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Please fill in both your email and password.",
-                    "Missing Credentials",
-                    JOptionPane.WARNING_MESSAGE);
+            showMessage("Please fill in both your email and password.", "Missing Credentials", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
         try {
             User authenticatedUser = userService.login(email, password);
-            JOptionPane.showMessageDialog(this,
-                    "Welcome back, " + authenticatedUser.getName() + "!",
-                    "Login Successful",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            // Open Main Dashboard Frame
+            showMessage("Welcome back, " + authenticatedUser.getName() + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
             MainFrame mainFrame = new MainFrame(authenticatedUser, this);
             mainFrame.setVisible(true);
-            this.setVisible(false);
-
+            setVisible(false);
             txtLoginPassword.setText("");
-
         } catch (InvalidLoginException e) {
-            JOptionPane.showMessageDialog(this,
-                    e.getMessage(),
-                    "Authentication Failed",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Database error during login: " + e.getMessage() +
-                    "\nPlease verify MySQL is running and config.properties has correct credentials.",
-                    "Database Error",
-                    JOptionPane.ERROR_MESSAGE);
+            showMessage(e.getMessage(), "Authentication Failed", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException | DatabaseException e) {
+            showDatabaseProblem(e);
         }
     }
 
@@ -341,67 +234,158 @@ public class LoginRegisterFrame extends JFrame {
         String email = txtRegEmail.getText().trim();
         String password = new String(txtRegPassword.getPassword());
         String confirmPassword = new String(txtRegConfirmPassword.getPassword());
-
         try {
             User createdUser = userService.register(name, email, password, confirmPassword);
-            JOptionPane.showMessageDialog(this,
-                    "Account registered successfully! You can now sign in with " + createdUser.getEmail(),
-                    "Registration Successful",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            // Clear inputs
+            showMessage("Account registered successfully. You can now sign in with " + createdUser.getEmail(), "Registration Successful", JOptionPane.INFORMATION_MESSAGE);
             txtRegName.setText("");
             txtRegEmail.setText("");
             txtRegPassword.setText("");
             txtRegConfirmPassword.setText("");
-
-            // Switch to Login Tab
             tabSwitch.setSelectedIndex(0);
             txtLoginEmail.setText(createdUser.getEmail());
             txtLoginPassword.setText(password);
-
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this,
-                    e.getMessage(),
-                    "Validation Error",
-                    JOptionPane.WARNING_MESSAGE);
+            showMessage(e.getMessage(), "Validation Error", JOptionPane.WARNING_MESSAGE);
         } catch (DuplicateEmailException e) {
-            JOptionPane.showMessageDialog(this,
-                    e.getMessage(),
-                    "Account Already Exists",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Database error during registration: " + e.getMessage(),
-                    "Database Error",
-                    JOptionPane.ERROR_MESSAGE);
+            showMessage(e.getMessage(), "Account Already Exists", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException | DatabaseException e) {
+            showDatabaseProblem(e);
         }
     }
 
     private void checkDatabaseStatus() {
-        SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+        SwingWorker<DatabaseState, Void> worker = new SwingWorker<>() {
             @Override
-            protected Boolean doInBackground() {
-                return DatabaseConnection.testConnection();
+            protected DatabaseState doInBackground() {
+                String issue = DatabaseConnection.getConfigurationIssue();
+                return new DatabaseState(issue, issue == null && DatabaseConnection.testConnection());
             }
 
             @Override
             protected void done() {
                 try {
-                    boolean connected = get();
-                    if (connected) {
-                        lblDbStatus.setText("● MySQL Connected: skill_chain_db");
-                        lblDbStatus.setForeground(new Color(5, 150, 105)); // Emerald
+                    DatabaseState state = get();
+                    if (state.connected) {
+                        setDatabaseStatus("MYSQL CONNECTED / SKILL_CHAIN_DB", UITheme.COLOR_SUCCESS);
+                    } else if (state.configurationIssue != null) {
+                        setDatabaseStatus("SETUP NEEDED / USE CONFIGURE DATABASE", UITheme.COLOR_PRIMARY);
                     } else {
-                        lblDbStatus.setText("⚠ MySQL Disconnected (Check config.properties)");
-                        lblDbStatus.setForeground(new Color(220, 38, 38)); // Rose
+                        setDatabaseStatus("MYSQL OFFLINE / START YOUR SERVER", UITheme.COLOR_DANGER);
                     }
+                    setAuthEnabled(state.connected);
                 } catch (Exception e) {
-                    lblDbStatus.setText("⚠ Connection Error: " + e.getMessage());
-                    lblDbStatus.setForeground(new Color(220, 38, 38));
+                    setDatabaseStatus("DATABASE CHECK FAILED / USE CONFIGURE DATABASE", UITheme.COLOR_DANGER);
+                    setAuthEnabled(false);
                 }
             }
         };
         worker.execute();
+    }
+
+    private void setDatabaseStatus(String text, Color color) {
+        lblDbStatus.setText(text);
+        lblDbStatus.setForeground(UITheme.COLOR_INK);
+        statusPill.setBackground(color);
+        statusPill.repaint();
+    }
+
+    private void setAuthEnabled(boolean enabled) {
+        if (btnLoginAction != null) {
+            btnLoginAction.setEnabled(enabled);
+            btnLoginAction.setToolTipText(enabled ? null : "Configure a working MySQL connection first");
+        }
+        if (btnRegisterAction != null) {
+            btnRegisterAction.setEnabled(enabled);
+            btnRegisterAction.setToolTipText(enabled ? null : "Configure a working MySQL connection first");
+        }
+    }
+
+    private void showDatabaseProblem(Exception exception) {
+        String configurationIssue = DatabaseConnection.getConfigurationIssue();
+        String message;
+        if (configurationIssue != null) {
+            message = "Database setup is incomplete.\n\nUse CONFIGURE DATABASE below to save your local MySQL URL, username, and password.\n\n" + configurationIssue;
+        } else {
+            message = "Skill Chain cannot reach MySQL.\n\nStart MySQL and confirm that the database created by schema.sql is available.\n\nTechnical detail: " + exception.getMessage();
+        }
+        Object[] options = {"CONFIGURE DATABASE", "CLOSE"};
+        int choice = JOptionPane.showOptionDialog(this, message, "Database Setup", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        if (choice == 0) {
+            openDatabaseSetupDialog();
+        }
+    }
+
+    private void openDatabaseSetupDialog() {
+        JDialog dialog = new JDialog(this, "Configure MySQL", true);
+        dialog.setSize(520, 390);
+        dialog.setLocationRelativeTo(this);
+        dialog.setLayout(new BorderLayout());
+
+        JPanel content = new JPanel(new GridBagLayout());
+        content.setBackground(UITheme.COLOR_BG);
+        content.setBorder(new EmptyBorder(22, 24, 12, 24));
+        GridBagConstraints gbc = formConstraints();
+        int row = 0;
+        content.add(label("DATABASE SETUP", UITheme.FONT_TITLE, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
+        gbc.insets = new Insets(4, 6, 12, 6);
+        content.add(label("These settings are saved only to your local ignored config.properties.", UITheme.FONT_SMALL, UITheme.COLOR_TEXT_MUTED), at(gbc, row++));
+        gbc.insets = new Insets(4, 6, 2, 6);
+        content.add(label("JDBC URL", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
+        ModernTextField urlField = new ModernTextField("jdbc:mysql://localhost:3306/skill_chain_db");
+        urlField.setText("jdbc:mysql://localhost:3306/skill_chain_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
+        gbc.insets = new Insets(2, 6, 8, 6);
+        content.add(urlField, at(gbc, row++));
+        gbc.insets = new Insets(4, 6, 2, 6);
+        content.add(label("MYSQL USER", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
+        ModernTextField userField = new ModernTextField("root");
+        userField.setText("root");
+        gbc.insets = new Insets(2, 6, 8, 6);
+        content.add(userField, at(gbc, row++));
+        gbc.insets = new Insets(4, 6, 2, 6);
+        content.add(label("MYSQL PASSWORD", UITheme.FONT_BODY_BOLD, UITheme.COLOR_TEXT_PRIMARY), at(gbc, row++));
+        ModernPasswordField passwordField = new ModernPasswordField("Enter your local MySQL password");
+        gbc.insets = new Insets(2, 6, 4, 6);
+        content.add(passwordField, at(gbc, row));
+        dialog.add(content, BorderLayout.CENTER);
+
+        JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        actions.setBackground(UITheme.COLOR_BG);
+        ModernButton cancel = new ModernButton("CANCEL", ModernButton.ButtonStyle.SECONDARY);
+        cancel.addActionListener(e -> dialog.dispose());
+        ModernButton save = new ModernButton("SAVE & TEST", ModernButton.ButtonStyle.PRIMARY);
+        save.addActionListener(e -> {
+            try {
+                DatabaseConnection.saveConfiguration(urlField.getText(), userField.getText(), new String(passwordField.getPassword()));
+                dialog.dispose();
+                checkDatabaseStatus();
+            } catch (DatabaseException ex) {
+                showMessage(ex.getMessage(), "Could Not Save Setup", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        actions.add(cancel);
+        actions.add(save);
+        dialog.add(actions, BorderLayout.SOUTH);
+        dialog.setVisible(true);
+    }
+
+    private void showMessage(String message, String title, int type) {
+        JOptionPane.showMessageDialog(this, message, title, type);
+    }
+
+    private static final class DatabaseState {
+        private final String configurationIssue;
+        private final boolean connected;
+
+        private DatabaseState(String configurationIssue, boolean connected) {
+            this.configurationIssue = configurationIssue;
+            this.connected = connected;
+        }
+    }
+
+    /** Small border helper keeps the card code readable without rounded pills. */
+    private static final class CompoundBorderCompat extends javax.swing.border.CompoundBorder {
+        private CompoundBorderCompat(Color color, int thickness, int top, int left, int bottom, int right) {
+            super(new javax.swing.border.LineBorder(color, thickness), new EmptyBorder(top, left, bottom, right));
+        }
     }
 }

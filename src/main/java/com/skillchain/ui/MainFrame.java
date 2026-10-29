@@ -111,7 +111,7 @@ public class MainFrame extends JFrame {
         setSize(1140, 780);
         setMinimumSize(new Dimension(980, 700));
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(248, 250, 252));
+        getContentPane().setBackground(UITheme.COLOR_BG);
         setLayout(new BorderLayout());
 
         // 1. Top Modern Navigation Header with Symbol-Only Bell & Profile
@@ -119,8 +119,8 @@ public class MainFrame extends JFrame {
 
         // 2. Tabbed Navigation across the Core Screens
         tabbedPane = new JTabbedPane();
-        tabbedPane.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        tabbedPane.setBackground(Color.WHITE);
+        tabbedPane.setFont(UITheme.FONT_BODY_BOLD);
+        tabbedPane.setBackground(UITheme.COLOR_BG);
 
         // Screen 1: Dashboard
         tabbedPane.addTab("  Dashboard  ", createDashboardPanel());
@@ -155,10 +155,10 @@ public class MainFrame extends JFrame {
 
     private JPanel createTopHeader() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(Color.WHITE);
+        header.setBackground(UITheme.COLOR_CARD_BG);
         header.setBorder(new CompoundBorder(
-                BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(226, 232, 240)),
-                new EmptyBorder(12, 24, 12, 24)
+                BorderFactory.createMatteBorder(0, 0, 3, 0, UITheme.COLOR_INK),
+                new EmptyBorder(14, 24, 14, 24)
         ));
 
         // Left: Vector Logo Badge & Platform Identity
@@ -170,12 +170,14 @@ public class MainFrame extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(37, 99, 235));
-                g2.fill(new RoundRectangle2D.Float(0, 0, 36, 36, 10, 10));
-                g2.setColor(Color.WHITE);
-                g2.setStroke(new BasicStroke(2.2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-                g2.draw(new RoundRectangle2D.Float(8, 10, 12, 8, 4, 4));
-                g2.draw(new RoundRectangle2D.Float(16, 16, 12, 8, 4, 4));
+                g2.setColor(UITheme.COLOR_PRIMARY);
+                g2.fillRect(0, 0, 36, 36);
+                g2.setColor(UITheme.COLOR_INK);
+                g2.setStroke(new BasicStroke(2.5f));
+                g2.drawRect(1, 1, 33, 33);
+                g2.drawRect(8, 10, 13, 8);
+                g2.setColor(UITheme.COLOR_SECONDARY);
+                g2.drawRect(15, 17, 13, 8);
                 g2.dispose();
             }
         };
@@ -188,12 +190,12 @@ public class MainFrame extends JFrame {
         brandTextPanel.setOpaque(false);
 
         JLabel lblBrand = new JLabel("SKILL CHAIN");
-        lblBrand.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        lblBrand.setForeground(new Color(15, 23, 42));
+        lblBrand.setFont(UITheme.FONT_SUBTITLE);
+        lblBrand.setForeground(UITheme.COLOR_TEXT_PRIMARY);
 
         JLabel lblTag = new JLabel("Campus Student Exchange");
-        lblTag.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        lblTag.setForeground(new Color(100, 116, 139));
+        lblTag.setFont(UITheme.FONT_SMALL);
+        lblTag.setForeground(UITheme.COLOR_TEXT_MUTED);
 
         brandTextPanel.add(lblBrand);
         brandTextPanel.add(lblTag);
@@ -239,37 +241,25 @@ public class MainFrame extends JFrame {
                 int w = getWidth();
                 int h = getHeight();
 
-                // Circular background
-                if (isHovered) {
-                    g2.setColor(new Color(239, 246, 255));
-                    g2.fillOval(0, 0, w, h);
-                    g2.setColor(new Color(191, 219, 254));
-                    g2.drawOval(0, 0, w - 1, h - 1);
-                } else {
-                    g2.setColor(new Color(248, 250, 252));
-                    g2.fillOval(0, 0, w, h);
-                    g2.setColor(new Color(226, 232, 240));
-                    g2.drawOval(0, 0, w - 1, h - 1);
-                }
-
-                // Bell Icon Symbol Only
-                g2.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
-                FontMetrics fm = g2.getFontMetrics();
-                String bell = "🔔";
-                int bx = (w - fm.stringWidth(bell)) / 2;
-                int by = (h - fm.getHeight()) / 2 + fm.getAscent() - 1;
-                g2.drawString(bell, bx, by);
+                g2.setColor(isHovered ? UITheme.COLOR_PRIMARY : UITheme.COLOR_SECONDARY);
+                g2.fillRect(0, 0, w - 4, h - 4);
+                g2.setColor(UITheme.COLOR_INK);
+                g2.setStroke(new BasicStroke(2.5f));
+                g2.drawRect(1, 1, w - 7, h - 7);
+                g2.drawArc(11, 9, 15, 18, 0, 180);
+                g2.drawLine(10, 18, 27, 18);
+                g2.fillOval(17, 26, 4, 4);
 
                 // Notification counter badge if > 0
                 if (notificationCount > 0) {
                     int badgeSize = 14;
                     int badgeX = w - badgeSize - 1;
                     int badgeY = 1;
-                    g2.setColor(new Color(239, 68, 68));
-                    g2.fillOval(badgeX, badgeY, badgeSize, badgeSize);
+                    g2.setColor(UITheme.COLOR_ACCENT);
+                    g2.fillRect(badgeX, badgeY, badgeSize, badgeSize);
 
                     g2.setColor(Color.WHITE);
-                    g2.setFont(new Font("Segoe UI", Font.BOLD, 9));
+                    g2.setFont(UITheme.FONT_SMALL.deriveFont(Font.BOLD, 9f));
                     FontMetrics bfm = g2.getFontMetrics();
                     String countStr = String.valueOf(Math.min(notificationCount, 9));
                     int tx = badgeX + (badgeSize - bfm.stringWidth(countStr)) / 2;
@@ -290,12 +280,12 @@ public class MainFrame extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(239, 246, 255));
-                g2.fillOval(0, 0, 38, 38);
-                g2.setColor(new Color(37, 99, 235));
-                g2.setStroke(new BasicStroke(1.5f));
-                g2.drawOval(0, 0, 37, 37);
-                g2.setFont(new Font("Segoe UI", Font.BOLD, 13));
+                g2.setColor(UITheme.COLOR_PRIMARY);
+                g2.fillRect(0, 0, 38, 38);
+                g2.setColor(UITheme.COLOR_INK);
+                g2.setStroke(new BasicStroke(2.5f));
+                g2.drawRect(1, 1, 35, 35);
+                g2.setFont(UITheme.FONT_BODY_BOLD);
                 FontMetrics fm = g2.getFontMetrics();
                 int x = (38 - fm.stringWidth(initials)) / 2;
                 int y = (38 - fm.getHeight()) / 2 + fm.getAscent();
@@ -311,12 +301,12 @@ public class MainFrame extends JFrame {
         userDetail.setOpaque(false);
 
         JLabel lblName = new JLabel(currentUser.getName());
-        lblName.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        lblName.setForeground(new Color(15, 23, 42));
+        lblName.setFont(UITheme.FONT_BODY_BOLD);
+        lblName.setForeground(UITheme.COLOR_TEXT_PRIMARY);
 
         JLabel lblEmail = new JLabel(currentUser.getEmail());
-        lblEmail.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        lblEmail.setForeground(new Color(100, 116, 139));
+        lblEmail.setFont(UITheme.FONT_SMALL);
+        lblEmail.setForeground(UITheme.COLOR_TEXT_MUTED);
 
         userDetail.add(lblName);
         userDetail.add(lblEmail);
@@ -346,37 +336,36 @@ public class MainFrame extends JFrame {
     // ========================================================================
     private JPanel createDashboardPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(248, 250, 252));
+        panel.setBackground(UITheme.COLOR_BG);
 
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         content.setOpaque(false);
         content.setBorder(new EmptyBorder(22, 26, 22, 26));
 
-        // 1. Sleek Gradient Hero Banner
+        // 1. Graphic hero banner: flat ink block with a hard outline.
         JPanel hero = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 int w = getWidth();
                 int h = getHeight();
-
-                GradientPaint gp = new GradientPaint(
-                        0, 0, new Color(15, 23, 42),
-                        w, h, new Color(30, 58, 138)
-                );
-                g2.setPaint(gp);
-                g2.fill(new RoundRectangle2D.Float(0, 0, w, h, 16, 16));
-
-                g2.setColor(new Color(255, 255, 255, 10));
-                g2.fillOval(w - 180, -40, 220, 220);
-                g2.fillOval(w - 280, 40, 120, 120);
+                g2.setColor(UITheme.COLOR_INK);
+                g2.fillRect(0, 0, w, h);
+                g2.setColor(UITheme.COLOR_PRIMARY);
+                g2.fillRect(0, 0, 18, h);
+                g2.setColor(UITheme.COLOR_ACCENT);
+                g2.fillRect(Math.max(0, w - 150), h - 12, Math.min(150, w), 12);
+                g2.setColor(UITheme.COLOR_SECONDARY);
+                g2.fillRect(Math.max(0, w - 82), 14, 54, 7);
+                g2.setColor(UITheme.COLOR_INK);
+                g2.setStroke(new BasicStroke(3.0f));
+                g2.drawRect(1, 1, Math.max(0, w - 3), Math.max(0, h - 3));
                 g2.dispose();
             }
         };
         hero.setLayout(new BorderLayout());
-        hero.setOpaque(false);
+        hero.setOpaque(true);
         hero.setBorder(new EmptyBorder(22, 26, 22, 26));
         hero.setAlignmentX(Component.LEFT_ALIGNMENT);
         hero.setMaximumSize(new Dimension(Integer.MAX_VALUE, 150));
@@ -386,16 +375,16 @@ public class MainFrame extends JFrame {
         heroLeft.setOpaque(false);
 
         JLabel lblTag = new JLabel("● CAMPUS PEER NETWORK  •  STUDENT PORTAL");
-        lblTag.setFont(new Font("Segoe UI", Font.BOLD, 11));
-        lblTag.setForeground(new Color(52, 211, 153));
+        lblTag.setFont(UITheme.FONT_SMALL.deriveFont(Font.BOLD));
+        lblTag.setForeground(UITheme.COLOR_PRIMARY);
 
-        JLabel lblGreeting = new JLabel("Welcome back, " + currentUser.getName() + "! 👋");
-        lblGreeting.setFont(new Font("Segoe UI", Font.BOLD, 23));
+        JLabel lblGreeting = new JLabel("Welcome back, " + currentUser.getName() + "!");
+        lblGreeting.setFont(UITheme.FONT_TITLE);
         lblGreeting.setForeground(Color.WHITE);
 
         JLabel lblDesc = new JLabel("Explore reciprocal skill exchanges with classmates. Teach what you excel at, learn what you need.");
-        lblDesc.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        lblDesc.setForeground(new Color(203, 213, 225));
+        lblDesc.setFont(UITheme.FONT_BODY);
+        lblDesc.setForeground(new Color(235, 235, 235));
 
         heroLeft.add(lblTag);
         heroLeft.add(Box.createRigidArea(new Dimension(0, 6)));
@@ -438,7 +427,7 @@ public class MainFrame extends JFrame {
         lblDashRequests = new JLabel("0");
 
         statsRow.add(createInteractiveMetricCard(
-                "🎓", "Skills I Teach", lblDashTeach,
+                "TEACH", "Skills I Teach", lblDashTeach,
                 new Color(37, 99, 235), "Offering", "Click to manage offering skills →",
                 () -> {
                     tabbedPane.setSelectedIndex(1);
@@ -449,7 +438,7 @@ public class MainFrame extends JFrame {
         ));
 
         statsRow.add(createInteractiveMetricCard(
-                "📚", "Skills I Learn", lblDashLearn,
+                "LEARN", "Skills I Learn", lblDashLearn,
                 new Color(79, 70, 229), "Seeking", "Click to manage sought skills →",
                 () -> {
                     tabbedPane.setSelectedIndex(1);
@@ -460,13 +449,13 @@ public class MainFrame extends JFrame {
         ));
 
         statsRow.add(createInteractiveMetricCard(
-                "🤝", "Reciprocal Matches", lblDashMatches,
+                "MATCH", "Reciprocal Matches", lblDashMatches,
                 new Color(16, 185, 129), "Mutual", "Click to view mutual matches →",
                 () -> tabbedPane.setSelectedIndex(2)
         ));
 
         statsRow.add(createInteractiveMetricCard(
-                "📬", "Exchange Requests", lblDashRequests,
+                "REQUEST", "Exchange Requests", lblDashRequests,
                 new Color(245, 158, 11), "Pending", "Click to review proposals →",
                 () -> tabbedPane.setSelectedIndex(3)
         ));
@@ -670,30 +659,18 @@ public class MainFrame extends JFrame {
                 int w = getWidth();
                 int h = getHeight();
 
-                int shadowOffset = isHovered ? 4 : 2;
-                int shadowAlpha = isHovered ? 28 : 10;
-                g2.setColor(new Color(accentColor.getRed(), accentColor.getGreen(), accentColor.getBlue(), shadowAlpha));
-                g2.fill(new RoundRectangle2D.Float(1, 1 + shadowOffset, w - 2, h - 2, 14, 14));
+                int shadowOffset = isPressed ? 2 : (isHovered ? 7 : 5);
+                g2.setColor(UITheme.COLOR_INK);
+                g2.fillRect(shadowOffset, shadowOffset, Math.max(0, w - shadowOffset), Math.max(0, h - shadowOffset));
+                g2.setColor(isPressed ? new Color(245, 245, 245) : Color.WHITE);
+                g2.fillRect(0, 0, Math.max(0, w - shadowOffset - 1), Math.max(0, h - shadowOffset - 1));
 
-                if (isPressed) {
-                    g2.setColor(new Color(245, 247, 250));
-                } else {
-                    g2.setColor(Color.WHITE);
-                }
-                g2.fill(new RoundRectangle2D.Float(1, 1, w - 2, h - 2, 12, 12));
-
-                int stripWidth = isHovered ? 7 : 5;
+                int stripWidth = isHovered ? 10 : 7;
                 g2.setColor(accentColor);
-                g2.fill(new RoundRectangle2D.Float(1, 1, stripWidth, h - 2, 6, 6));
-
-                if (isHovered) {
-                    g2.setColor(new Color(accentColor.getRed(), accentColor.getGreen(), accentColor.getBlue(), 140));
-                    g2.setStroke(new BasicStroke(1.5f));
-                } else {
-                    g2.setColor(new Color(226, 232, 240));
-                    g2.setStroke(new BasicStroke(1.0f));
-                }
-                g2.draw(new RoundRectangle2D.Float(1, 1, w - 2, h - 2, 12, 12));
+                g2.fillRect(0, 0, stripWidth, Math.max(0, h - shadowOffset - 1));
+                g2.setColor(UITheme.COLOR_INK);
+                g2.setStroke(new BasicStroke(3.0f));
+                g2.drawRect(1, 1, Math.max(0, w - shadowOffset - 3), Math.max(0, h - shadowOffset - 3));
                 g2.dispose();
             }
         }
@@ -703,17 +680,16 @@ public class MainFrame extends JFrame {
         JPanel top = new JPanel(new BorderLayout());
         top.setOpaque(false);
 
-        JLabel lblTitle = new JLabel(icon + " " + title);
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        lblTitle.setForeground(new Color(51, 65, 85));
+        JLabel lblTitle = new JLabel(icon + " / " + title);
+        lblTitle.setFont(UITheme.FONT_BODY_BOLD);
+        lblTitle.setForeground(UITheme.COLOR_TEXT_PRIMARY);
 
         JPanel badgePill = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(accentColor.getRed(), accentColor.getGreen(), accentColor.getBlue(), 22));
-                g2.fill(new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 10, 10));
+                g2.setColor(accentColor);
+                g2.fillRect(0, 0, getWidth(), getHeight());
                 g2.dispose();
             }
         };
@@ -727,13 +703,13 @@ public class MainFrame extends JFrame {
         top.add(lblTitle, BorderLayout.WEST);
         top.add(badgePill, BorderLayout.EAST);
 
-        valueLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
-        valueLabel.setForeground(new Color(15, 23, 42));
+        valueLabel.setFont(UITheme.FONT_TITLE.deriveFont(30f));
+        valueLabel.setForeground(UITheme.COLOR_TEXT_PRIMARY);
         valueLabel.setBorder(new EmptyBorder(8, 0, 4, 0));
 
         JLabel lblHint = new JLabel(hintText);
-        lblHint.setFont(new Font("Segoe UI", Font.BOLD, 11));
-        lblHint.setForeground(accentColor);
+        lblHint.setFont(UITheme.FONT_SMALL.deriveFont(Font.BOLD));
+        lblHint.setForeground(UITheme.COLOR_TEXT_PRIMARY);
 
         card.add(top, BorderLayout.NORTH);
         card.add(valueLabel, BorderLayout.CENTER);
@@ -1555,7 +1531,8 @@ public class MainFrame extends JFrame {
             for (Skill s : allSkills) {
                 cmbOffer.addItem(s.getSkillName() + " (" + s.getCategory() + ")");
             }
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            showDatabaseError("Loading skills for the proposal dialog", e);
         }
         gbc.gridy = row++;
         panel.add(cmbOffer, gbc);
@@ -1638,7 +1615,9 @@ public class MainFrame extends JFrame {
         if (cachedPeerStudents.isEmpty()) {
             try {
                 cachedPeerStudents = requestService.getPeerDirectory(currentUser.getId());
-            } catch (SQLException ignored) {}
+            } catch (SQLException e) {
+                showDatabaseError("Loading the student directory", e);
+            }
         }
         if (cachedPeerStudents.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No classmate accounts found to send requests to.", "Notice", JOptionPane.INFORMATION_MESSAGE);
@@ -1687,7 +1666,8 @@ public class MainFrame extends JFrame {
             for (Skill s : allSkills) {
                 cmbOffer.addItem(s.getSkillName() + " (" + s.getCategory() + ")");
             }
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            showDatabaseError("Loading skills for the request dialog", e);
         }
         gbc.gridy = row++;
         panel.add(cmbOffer, gbc);
@@ -1796,7 +1776,8 @@ public class MainFrame extends JFrame {
             int pendingReqCount = requestService.getPendingIncomingCount(currentUser.getId());
             lblDashRequests.setText(String.valueOf(pendingReqCount));
 
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            showDatabaseError("Refreshing dashboard statistics", e);
         }
     }
 
@@ -1808,7 +1789,8 @@ public class MainFrame extends JFrame {
                 btnNotifications.setToolTipText("Notifications (" + notificationCount + ")");
                 btnNotifications.repaint();
             }
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            showDatabaseError("Refreshing notifications", e);
         }
     }
 
@@ -2404,7 +2386,8 @@ public class MainFrame extends JFrame {
             for (Skill cs : catalogSkills) {
                 cmbCatalog.addItem(cs.getSkillName() + " (" + cs.getCategory() + ")");
             }
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            showDatabaseError("Loading skills for the add-skill dialog", e);
         }
         gbc.gridy = row++;
         panel.add(cmbCatalog, gbc);
@@ -2539,6 +2522,22 @@ public class MainFrame extends JFrame {
         dialog.add(closePanel, BorderLayout.SOUTH);
 
         dialog.setVisible(true);
+    }
+
+    /**
+     * Reports database failures instead of silently leaving the UI empty.
+     * The message intentionally contains only the SQLException message and
+     * never exposes configured credentials.
+     */
+    private void showDatabaseError(String operation, Exception exception) {
+        String detail = exception.getMessage() == null ? "No additional details were provided." : exception.getMessage();
+        System.err.println("[Skill Chain] " + operation + ": " + detail);
+        JOptionPane.showMessageDialog(
+                this,
+                operation + " failed. Please verify that MySQL is running and config.properties is correct.\n\nDetails: " + detail,
+                "Database Error",
+                JOptionPane.ERROR_MESSAGE
+        );
     }
 
     private void handleLogout() {

@@ -4,106 +4,87 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
 import java.util.function.Consumer;
 
-/**
- * SegmentedSwitch: A modern pill-shaped toggle switch replacing dated Swing JTabbedPanes.
- */
+/** Compact rectangular tab switch with an animated active-block slide. */
 public class SegmentedSwitch extends JPanel {
 
     private final String[] options;
-    private int selectedIndex = 0;
-    private Consumer<Integer> onSelectionChange;
+    private final Consumer<Integer> onSelectionChange;
+    private int selectedIndex;
+    private float activePosition;
+    private Timer slideTimer;
 
     public SegmentedSwitch(String[] options, Consumer<Integer> onSelectionChange) {
         this.options = options;
         this.onSelectionChange = onSelectionChange;
+        this.activePosition = 0;
         setOpaque(false);
-        setPreferredSize(new Dimension(320, 42));
+        setPreferredSize(new Dimension(340, 48));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int width = getWidth();
-                int segmentWidth = width / options.length;
+                int segmentWidth = Math.max(1, getWidth() / options.length);
                 int clickedIndex = Math.min(e.getX() / segmentWidth, options.length - 1);
-                if (clickedIndex != selectedIndex) {
-                    selectedIndex = clickedIndex;
-                    repaint();
-                    if (onSelectionChange != null) {
-                        onSelectionChange.accept(selectedIndex);
-                    }
-                }
+                setSelectedIndex(clickedIndex);
             }
         });
     }
 
     public void setSelectedIndex(int index) {
-        if (index >= 0 && index < options.length && index != selectedIndex) {
-            this.selectedIndex = index;
-            repaint();
-            if (onSelectionChange != null) {
-                onSelectionChange.accept(selectedIndex);
+        if (index < 0 || index >= options.length || index == selectedIndex) {
+            return;
+        }
+        selectedIndex = index;
+        if (slideTimer != null && slideTimer.isRunning()) {
+            slideTimer.stop();
+        }
+        slideTimer = new Timer(14, e -> {
+            float delta = selectedIndex - activePosition;
+            activePosition += delta * 0.28f;
+            if (Math.abs(delta) < 0.02f) {
+                activePosition = selectedIndex;
+                slideTimer.stop();
             }
+            repaint();
+        });
+        slideTimer.start();
+        if (onSelectionChange != null) {
+            onSelectionChange.accept(selectedIndex);
         }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-
         int w = getWidth();
         int h = getHeight();
-        int padding = 4;
-        int radius = 12;
+        int segmentWidth = Math.max(1, w / options.length);
 
-        // Container Pill: Soft Slate-200 background
-        g2.setColor(new Color(241, 245, 249)); // Slate-100
-        g2.fill(new RoundRectangle2D.Float(0, 0, w, h, radius + 4, radius + 4));
-
-        g2.setColor(new Color(226, 232, 240)); // Slate-200
-        g2.setStroke(new BasicStroke(1.0f));
-        g2.draw(new RoundRectangle2D.Float(0, 0, w - 1, h - 1, radius + 4, radius + 4));
-
-        // Active Segment Pill
-        int segmentWidth = (w - (padding * 2)) / options.length;
-        int activeX = padding + (selectedIndex * segmentWidth);
-        int activeY = padding;
-        int activeW = segmentWidth;
-        int activeH = h - (padding * 2);
-
-        // Active pill shadow & background
-        g2.setColor(new Color(0, 0, 0, 15));
-        g2.fill(new RoundRectangle2D.Float(activeX, activeY + 1, activeW, activeH, radius, radius));
-
+        g2.setColor(UITheme.COLOR_INK);
+        g2.fillRect(4, 5, Math.max(0, w - 4), Math.max(0, h - 5));
         g2.setColor(Color.WHITE);
-        g2.fill(new RoundRectangle2D.Float(activeX, activeY, activeW, activeH, radius, radius));
+        g2.fillRect(0, 0, Math.max(0, w - 5), Math.max(0, h - 5));
+        g2.setColor(UITheme.COLOR_INK);
+        g2.setStroke(new BasicStroke(3.0f));
+        g2.drawRect(1, 1, Math.max(0, w - 7), Math.max(0, h - 7));
 
-        g2.setColor(new Color(203, 213, 225));
-        g2.setStroke(new BasicStroke(1.0f));
-        g2.draw(new RoundRectangle2D.Float(activeX, activeY, activeW, activeH, radius, radius));
+        int activeX = Math.round(activePosition * segmentWidth) + 4;
+        g2.setColor(UITheme.COLOR_PRIMARY);
+        g2.fillRect(activeX, 5, Math.max(0, segmentWidth - 8), Math.max(0, h - 13));
+        g2.setColor(UITheme.COLOR_INK);
+        g2.drawRect(activeX, 5, Math.max(0, segmentWidth - 8), Math.max(0, h - 13));
 
-        // Draw Options Labels
-        g2.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        g2.setFont(UITheme.FONT_BODY_BOLD);
         FontMetrics fm = g2.getFontMetrics();
-
         for (int i = 0; i < options.length; i++) {
-            int segX = padding + (i * segmentWidth);
-            boolean isSelected = (i == selectedIndex);
-
-            g2.setColor(isSelected ? new Color(15, 23, 42) : new Color(100, 116, 139));
+            int x = i * segmentWidth;
             String text = options[i];
-            int textW = fm.stringWidth(text);
-            int textX = segX + (segmentWidth - textW) / 2;
-            int textY = (h - fm.getHeight()) / 2 + fm.getAscent();
-
-            g2.drawString(text, textX, textY);
+            g2.setColor(i == selectedIndex ? UITheme.COLOR_INK : UITheme.COLOR_TEXT_MUTED);
+            g2.drawString(text, x + (segmentWidth - fm.stringWidth(text)) / 2, (h - fm.getHeight()) / 2 + fm.getAscent());
         }
-
         g2.dispose();
     }
 }

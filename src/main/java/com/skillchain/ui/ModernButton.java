@@ -4,11 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
 
 /**
- * ModernButton: A sleek, custom-painted JButton with anti-aliasing, rounded corners,
- * smooth hover transitions, and guaranteed high-contrast text across all operating systems.
+ * Neo-brutalist action button with a hard offset shadow and tactile press state.
  */
 public class ModernButton extends JButton {
 
@@ -20,48 +18,43 @@ public class ModernButton extends JButton {
     }
 
     private final ButtonStyle style;
-    private boolean isHovered = false;
-    private boolean isPressed = false;
-    private int cornerRadius = 10;
+    private boolean hovered;
+    private boolean pressed;
 
     public ModernButton(String text, ButtonStyle style) {
         super(text);
         this.style = style;
-
         setContentAreaFilled(false);
         setFocusPainted(false);
         setBorderPainted(false);
         setOpaque(false);
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        setFont(new Font("Segoe UI", Font.BOLD, 13));
-
-        // Set dimensions & margins
+        setFont(UITheme.FONT_BODY_BOLD);
         setMargin(new Insets(10, 18, 10, 18));
 
-        // Hover & Press event listeners
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                isHovered = true;
+                hovered = true;
                 repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                isHovered = false;
-                isPressed = false;
+                hovered = false;
+                pressed = false;
                 repaint();
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                isPressed = true;
+                pressed = true;
                 repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                isPressed = false;
+                pressed = false;
                 repaint();
             }
         });
@@ -71,81 +64,47 @@ public class ModernButton extends JButton {
         this(text, ButtonStyle.PRIMARY);
     }
 
-    public void setCornerRadius(int radius) {
-        this.cornerRadius = radius;
-        repaint();
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-
         int width = getWidth();
         int height = getHeight();
+        int offset = pressed ? 2 : 5;
 
-        Color bgColor;
-        Color textColor;
-        Color borderColor = null;
-
+        Color background;
+        Color textColor = UITheme.COLOR_INK;
         switch (style) {
-            case PRIMARY:
-                bgColor = isPressed ? new Color(29, 78, 216) : (isHovered ? new Color(37, 99, 235) : new Color(30, 64, 175));
-                textColor = Color.WHITE;
-                break;
-            case SECONDARY:
-                bgColor = isPressed ? new Color(226, 232, 240) : (isHovered ? new Color(241, 245, 249) : Color.WHITE);
-                textColor = new Color(30, 41, 59); // Slate-800
-                borderColor = isHovered ? new Color(148, 163, 184) : new Color(203, 213, 225);
-                break;
-            case DANGER:
-                bgColor = isPressed ? new Color(185, 28, 28) : (isHovered ? new Color(220, 38, 38) : new Color(239, 68, 68));
-                textColor = Color.WHITE;
-                break;
-            case SUCCESS:
-                bgColor = isPressed ? new Color(4, 120, 87) : (isHovered ? new Color(5, 150, 105) : new Color(16, 185, 129));
-                textColor = Color.WHITE;
-                break;
-            default:
-                bgColor = new Color(37, 99, 235);
-                textColor = Color.WHITE;
+            case PRIMARY -> background = hovered ? UITheme.COLOR_PRIMARY_DARK : UITheme.COLOR_PRIMARY;
+            case SECONDARY -> background = hovered ? UITheme.COLOR_SECONDARY : Color.WHITE;
+            case DANGER -> background = hovered ? new Color(239, 84, 84) : UITheme.COLOR_DANGER;
+            case SUCCESS -> background = hovered ? new Color(65, 190, 105) : UITheme.COLOR_SUCCESS;
+            default -> background = UITheme.COLOR_PRIMARY;
         }
-
         if (!isEnabled()) {
-            bgColor = new Color(226, 232, 240);
-            textColor = new Color(148, 163, 184);
-            borderColor = null;
+            background = new Color(220, 220, 220);
+            textColor = new Color(120, 120, 120);
         }
 
-        // Fill background
-        g2.setColor(bgColor);
-        g2.fill(new RoundRectangle2D.Float(1, 1, width - 2, height - 2, cornerRadius, cornerRadius));
+        g2.setColor(UITheme.COLOR_INK);
+        g2.fillRect(offset, offset, Math.max(0, width - offset), Math.max(0, height - offset));
+        g2.setColor(background);
+        g2.fillRect(0, 0, Math.max(0, width - offset - 1), Math.max(0, height - offset - 1));
+        g2.setColor(UITheme.COLOR_INK);
+        g2.setStroke(new BasicStroke(3.0f));
+        g2.drawRect(1, 1, Math.max(0, width - offset - 3), Math.max(0, height - offset - 3));
 
-        // Draw border if applicable
-        if (borderColor != null) {
-            g2.setColor(borderColor);
-            g2.setStroke(new BasicStroke(1.2f));
-            g2.draw(new RoundRectangle2D.Float(1, 1, width - 2, height - 2, cornerRadius, cornerRadius));
-        }
-
-        // Draw text centered
         g2.setColor(textColor);
         g2.setFont(getFont());
         FontMetrics fm = g2.getFontMetrics();
-        Rectangle stringBounds = fm.getStringBounds(getText(), g2).getBounds();
-        int textX = (width - stringBounds.width) / 2;
-        int textY = (height - stringBounds.height) / 2 + fm.getAscent() - 1;
-
+        int textX = (width - fm.stringWidth(getText())) / 2;
+        int textY = (height - fm.getHeight()) / 2 + fm.getAscent() - (pressed ? 1 : 2);
         g2.drawString(getText(), textX, textY);
-
         g2.dispose();
     }
 
     @Override
     public Dimension getPreferredSize() {
         Dimension size = super.getPreferredSize();
-        // Generous vertical padding for a modern, clickable feel
-        return new Dimension(Math.max(size.width + 24, 100), Math.max(size.height + 14, 40));
+        return new Dimension(Math.max(size.width + 22, 108), Math.max(size.height + 16, 44));
     }
 }
