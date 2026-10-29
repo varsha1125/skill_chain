@@ -127,3 +127,11 @@ INSERT IGNORE INTO user_skills (user_id, skill_id, skill_type) VALUES
 (4, 7, 'TEACH'),
 (4, 5, 'LEARN'),
 (4, 8, 'TEACH');
+
+-- Sample Learning Requests for immediate demonstration:
+-- 1. Alice proposed swap with Bob (Java for Python) -> ACCEPTED
+-- 2. Charlie proposed swap with Alice (React for Java) -> PENDING
+INSERT IGNORE INTO learning_requests (request_id, sender_id, receiver_id, offered_skill_id, requested_skill_id, status) VALUES
+(1, 1, 2, 1, 2, 'ACCEPTED'),
+(2, 3, 1, 5, 1, 'PENDING');
+

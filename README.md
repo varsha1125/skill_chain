@@ -1,4 +1,4 @@
-# 🎓 SKILL CHAIN: Campus Peer-to-Peer Skill Exchange Platform
+﻿# 🎓 SKILL CHAIN: Campus Peer-to-Peer Skill Exchange Platform
 
 > **A Desktop Application Built with Core Java, Swing GUI, OOP Principles, and MySQL Database Persistence.**
 
@@ -129,12 +129,13 @@ All demo student accounts are configured with the password: **`Password123!`**
 
 ---
 
-## 📄 7. Final Report and Verification Documents
+## ?? 7. Academic Project Report and Verification Documents
 
-The complete report draft, diagrams, CRUD mapping, and verification plan are available in the [`docs`](docs) folder:
+The official **Final Project Report** prepared according to academic guidelines (Preliminary Pages, Chapters 1�8, References, and Appendices with real high-resolution output screenshots) is available in:
+* ?? **[PROJECT_REPORT.md](PROJECT_REPORT.md)** (Full academic project report in repository root)
+* ?? **[FINAL_PROJECT_REPORT.md](docs/FINAL_PROJECT_REPORT.md)** (Documentation copy under `docs/`)
 
-* [`FINAL_PROJECT_REPORT.md`](docs/FINAL_PROJECT_REPORT.md)
-* [`TEST_PLAN.md`](docs/TEST_PLAN.md)
-* [`CRUD_DEMONSTRATION.md`](docs/CRUD_DEMONSTRATION.md)
-
-The report still requires the team-specific certificate/declaration details and real screenshots captured while the application is connected to MySQL.
+Verification plans, test matrices, and CRUD logs:
+* [TEST_PLAN.md](docs/TEST_PLAN.md) � Comprehensive test cases and execution plan
+* [CRUD_DEMONSTRATION.md](docs/CRUD_DEMONSTRATION.md) � Step-by-step database verification guide
+* [VERIFICATION_RESULTS.md](docs/VERIFICATION_RESULTS.md) � Completed environment verification summary
