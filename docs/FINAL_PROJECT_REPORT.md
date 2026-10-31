@@ -10,6 +10,8 @@ This is to certify that the project titled **"Skill Chain: Campus Peer-to-Peer S
 
 1. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
 2. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
+3. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
+4. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
 
 under the guidance of our course faculty during the academic year **2025–2026** in partial fulfillment of the requirements in **Object-Oriented Programming (Java)** and **Database Management Systems (MySQL)**.
 
@@ -22,11 +24,13 @@ under the guidance of our course faculty during the academic year **2025–2026*
 
 ### Student Declaration
 
-We / I declare that this project is our original work and that all sources used in its design and implementation have been acknowledged.
+We, the undersigned, declare that this project is our original work and that all sources used in its design and implementation have been acknowledged.
 
 **Student Signature(s):**  
 1. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
 2. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
+3. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
+4. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
 
 ### Acknowledgement
 
@@ -35,6 +39,8 @@ We thank the **Principal**, the **Head of the Department of Computer Science and
 **Student Name(s):**  
 1. __________________________________________________  
 2. __________________________________________________  
+3. __________________________________________________  
+4. __________________________________________________  
 
 ### Abstract
 

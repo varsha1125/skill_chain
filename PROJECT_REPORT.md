@@ -13,6 +13,8 @@ Certified that this project report titled **"SKILL CHAIN: A Peer-to-Peer Skill E
 
 1. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
 2. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
+3. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
+4. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
 
 who carried out the project under my supervision for the fulfillment of the requirements in **Object-Oriented Programming (Java)** and **Database Management Systems (MySQL)** during the Academic Year 2025–2026.
 
@@ -29,9 +31,9 @@ College / Institute of Engineering & Technology &emsp;&emsp;&emsp;&emsp;&emsp;&e
 
 #### **STUDENT DECLARATION**
 
-We / I, ____________________________________________________________________________________, hereby declare that the project entitled **"SKILL CHAIN: Campus Peer-to-Peer Skill Exchange Platform"**, submitted in partial fulfillment of the requirements for the laboratory courses in **Object-Oriented Programming (OOP)** and **Database Management Systems (DBMS)**, is an authentic record of our / my original work completed under the guidance of our course instructors.
+We, the undersigned, hereby declare that the project entitled **"SKILL CHAIN: Campus Peer-to-Peer Skill Exchange Platform"**, submitted in partial fulfillment of the requirements for the laboratory courses in **Object-Oriented Programming (OOP)** and **Database Management Systems (DBMS)**, is an authentic record of our original work completed under the guidance of our course instructors.
 
-We / I further declare that this project report has not previously formed the basis for the award of any degree, diploma, associate-ship, fellowship, or similar academic title to any candidate.
+We further declare that this project report has not previously formed the basis for the award of any degree, diploma, associate-ship, fellowship, or similar academic title to any candidate.
 
 <br>
 
@@ -43,23 +45,27 @@ We / I further declare that this project report has not previously formed the ba
 **Student Signature(s):**  
 1. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
 2. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
+3. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
+4. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
 Department of Computer Science and Engineering  
 
 ---
 
 #### **ACKNOWLEDGEMENT**
 
-I / We take immense pride and privilege in expressing sincere gratitude to our respected **Principal** and **Head of the Department of Computer Science and Engineering** for providing world-class computing facilities and infrastructure that made this project possible.
+We take immense pride and privilege in expressing our sincere gratitude to our respected **Principal** and **Head of the Department of Computer Science and Engineering** for providing world-class computing facilities and infrastructure that made this project possible.
 
-I / We express deepest sense of gratitude and indebtedness to our **Project Guide and Faculty Instructors** for their invaluable guidance, constant motivation, constructive suggestions, and expert technical insights throughout the design, development, and testing phases of this project.
+We express our deepest sense of gratitude and indebtedness to our **Project Guide and Faculty Instructors** for their invaluable guidance, constant motivation, constructive suggestions, and expert technical insights throughout the design, development, and testing phases of this project.
 
-I / We also extend heartfelt thanks to the laboratory staff and technical administrators for ensuring seamless database and development environments. Lastly, we express appreciation to our fellow classmates and friends for their continuous peer feedback, constructive criticism, and support during the user testing and evaluation of the **Skill Chain** platform.
+We also extend our heartfelt thanks to the laboratory staff and technical administrators for ensuring seamless database and development environments. Lastly, we express our appreciation to our fellow classmates and friends for their continuous peer feedback, constructive criticism, and support during the user testing and evaluation of the **Skill Chain** platform.
 
 <br>
 
 **Student Name(s):**  
 1. __________________________________________________  
 2. __________________________________________________  
+3. __________________________________________________  
+4. __________________________________________________  
 
 ---
 
