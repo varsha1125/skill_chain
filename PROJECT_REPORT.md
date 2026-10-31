@@ -1,4 +1,4 @@
-# 🎓 SKILL CHAIN: Campus Peer-to-Peer Skill Exchange Platform
+﻿# 🎓 SKILL CHAIN: Campus Peer-to-Peer Skill Exchange Platform
 ## Final Project Report for Object-Oriented Programming (OOP) and Database Management Systems (DBMS)
 
 ---
@@ -9,7 +9,12 @@
 
 #### **BONAFIDE CERTIFICATE**
 
-Certified that this project report titled **"SKILL CHAIN: A Peer-to-Peer Skill Exchange Platform for University Students"** is the bonafide work of **VARSHA K** (Register No: *[Your University Register / Roll Number]*), who carried out the project under my supervision for the fulfillment of the requirements in **Object-Oriented Programming (Java)** and **Database Management Systems (MySQL)** during the Academic Year 2025–2026.
+Certified that this project report titled **"SKILL CHAIN: A Peer-to-Peer Skill Exchange Platform for University Students"** is the bonafide work of:
+
+1. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
+2. Name: __________________________________________________ &emsp;&emsp; Register No: ____________________________  
+
+who carried out the project under my supervision for the fulfillment of the requirements in **Object-Oriented Programming (Java)** and **Database Management Systems (MySQL)** during the Academic Year 2025–2026.
 
 <br><br>
 
@@ -24,30 +29,37 @@ College / Institute of Engineering & Technology &emsp;&emsp;&emsp;&emsp;&emsp;&e
 
 #### **STUDENT DECLARATION**
 
-I, **VARSHA K**, hereby declare that the project entitled **"SKILL CHAIN: Campus Peer-to-Peer Skill Exchange Platform"**, submitted in partial fulfillment of the requirements for the laboratory courses in **Object-Oriented Programming (OOP)** and **Database Management Systems (DBMS)**, is an authentic record of my original work completed under the guidance of my course instructors.
+We / I, ____________________________________________________________________________________, hereby declare that the project entitled **"SKILL CHAIN: Campus Peer-to-Peer Skill Exchange Platform"**, submitted in partial fulfillment of the requirements for the laboratory courses in **Object-Oriented Programming (OOP)** and **Database Management Systems (DBMS)**, is an authentic record of our / my original work completed under the guidance of our course instructors.
 
-I further declare that this project report has not previously formed the basis for the award of any degree, diploma, associate-ship, fellowship, or similar academic title to any candidate.
+We / I further declare that this project report has not previously formed the basis for the award of any degree, diploma, associate-ship, fellowship, or similar academic title to any candidate.
 
 <br>
 
-**Place:** Chennai, India  
-**Date:** 30th October 2026  
+**Place:** _______________________  
+**Date:** ________________________  
+
 <br>
-**VARSHA K**  
+
+**Student Signature(s):**  
+1. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
+2. Name: _____________________________________________ &emsp;&emsp; Signature: ____________________________  
 Department of Computer Science and Engineering  
 
 ---
 
 #### **ACKNOWLEDGEMENT**
 
-I take immense pride and privilege in expressing my sincere gratitude to our respected **Principal** and **Head of the Department of Computer Science and Engineering** for providing world-class computing facilities and infrastructure that made this project possible.
+I / We take immense pride and privilege in expressing sincere gratitude to our respected **Principal** and **Head of the Department of Computer Science and Engineering** for providing world-class computing facilities and infrastructure that made this project possible.
 
-I express my deepest sense of gratitude and indebtedness to my **Project Guide and Faculty Instructors** for their invaluable guidance, constant motivation, constructive suggestions, and expert technical insights throughout the design, development, and testing phases of this project.
+I / We express deepest sense of gratitude and indebtedness to our **Project Guide and Faculty Instructors** for their invaluable guidance, constant motivation, constructive suggestions, and expert technical insights throughout the design, development, and testing phases of this project.
 
-I also extend my heartfelt thanks to the laboratory staff and technical administrators for ensuring seamless database and development environments. Lastly, I express my appreciation to my fellow classmates and friends for their continuous peer feedback, constructive criticism, and support during the user testing and evaluation of the **Skill Chain** platform.
+I / We also extend heartfelt thanks to the laboratory staff and technical administrators for ensuring seamless database and development environments. Lastly, we express appreciation to our fellow classmates and friends for their continuous peer feedback, constructive criticism, and support during the user testing and evaluation of the **Skill Chain** platform.
 
 <br>
-**VARSHA K**
+
+**Student Name(s):**  
+1. __________________________________________________  
+2. __________________________________________________  
 
 ---
 
@@ -730,7 +742,7 @@ The verification plan was executed across three levels:
 
 | Test ID | Test Scenario | Input Data | Expected Result | Actual Result | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
-| **TC-01** | Student Sign-Up with valid credentials | Name: `"Varsha K"`<br>Email: `"varsha@university.edu"`<br>Pass: `"Password123!"` | New record created in `users` with generated salt and 64-char hash; automatically redirected to login. | User successfully registered; row visible in database. | **PASS** |
+| **TC-01** | Student Sign-Up with valid credentials | Name: `"Student User"`<br>Email: `"student@university.edu"`<br>Pass: `"Password123!"` | New record created in `users` with generated salt and 64-char hash; automatically redirected to login. | User successfully registered; row visible in database. | **PASS** |
 | **TC-02** | Duplicate Email Registration | Email: `"alice@university.edu"` | Application catches duplicate and raises `DuplicateEmailException`; error message displayed. | Red error alert shown; duplicate record rejected. | **PASS** |
 | **TC-03** | Invalid Password Login | Email: `"alice@university.edu"`<br>Pass: `"WrongPassword"` | Authentication fails; raises `InvalidLoginException`; login rejected. | Error dialog displayed; access denied. | **PASS** |
 | **TC-04** | Valid Student Login | Email: `"alice@university.edu"`<br>Pass: `"Password123!"` | Login succeeds; `MainFrame` opens with student's personalized metrics. | MainFrame launched successfully; Welcome banner displayed. | **PASS** |
