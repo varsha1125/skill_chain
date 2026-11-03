@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Skill Chain - Final Project Report</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #111;
+    background: #fdfdfd;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 30px;
+  }
+  h1 {
+    font-size: 18pt;
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-size: 14pt;
+    margin-top: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+  }
+  h3 {
+    font-size: 12pt;
+    margin-top: 16px;
+  }
+  p {
+    text-align: justify;
+    margin-bottom: 10px;
+  }
+  img {
+    max-width: 90%;
+    height: auto;
+    display: block;
+    margin: 15px auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 11pt;
+  }
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 8px 12px;
+    text-align: left;
+  }
+  th {
+    background-color: #f1f5f9;
+    font-weight: bold;
+  }
+  pre {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 12px;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 9.5pt;
+    overflow-x: auto;
+    border-radius: 4px;
+    line-height: 1.3;
+  }
+  code {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 10pt;
+    background: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #cbd5e1;
+    margin: 30px 0;
+    page-break-after: always;
+  }
+  .print-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #2563eb;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: none;
+    z-index: 1000;
+  }
+  @media print {
+    .print-btn { display: none; }
+    body { padding: 0; background: white; }
+    hr { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">📥 Print / Save as PDF</button>
+<h1>SKILL CHAIN: CAMPUS PEER-TO-PEER SKILL EXCHANGE PLATFORM</h1>
+<h3>Integrated OOPS and DBMS project report</h3>
+<p><br></p>
+<p><strong>Submitted by</strong>
+* <strong>VARSHA K – 250701807</strong>
+* <strong>VANDHANA M – 250701804</strong>
+* <strong>VARSHINI S – 250701809</strong>
+* <strong>VARSSINI A – 250701811</strong></p>
+<p><br></p>
+<p><strong>of</strong><br />
+<strong>BACHELOR OF ENGINEERING</strong><br />
+<strong>in</strong><br />
+<strong>Department of Computer Science and Engineering</strong>  </p>
+<p><br></p>
+<p><strong>RAJALAKSHMI ENGINEERING COLLEGE, THANDALAM</strong><br />
+<em>(An Autonomous Institution)</em>  </p>
+<p><br></p>
+<p align="center">
+  <img src="screenshots/rec_logo.png" width="480" alt="Rajalakshmi Engineering College"/>
+</p>
+
+<p><br></p>
+<p><strong>November 2026</strong></p>
+<hr />
+<p><br></p>
+<h1>RAJALAKSHMI ENGINEERING COLLEGE</h1>
+<h2>BONAFIDE CERTIFICATE</h2>
+<p>Certified that this project report titled <strong>“SKILL CHAIN: CAMPUS PEER-TO-PEER SKILL EXCHANGE PLATFORM”</strong> is the bonafide work of <strong>“VARSHA K (250701807), VANDHANA M (250701804), VARSHINI S (250701809), VARSSINI A (250701811)”</strong> who carried out the project work under my supervision.</p>
+<p><br><br><br></p>
+<p>---------------------------------------------------- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ----------------------------------------------------<br />
+<strong>SIGNATURE</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <strong>SIGNATURE</strong><br />
+Internal Faculty Name &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Internal Faculty Name<br />
+Course Incharge &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Course Incharge<br />
+Object oriented programming system &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Database management system<br />
+Department of Computer Science and Engineering &emsp;&emsp;&emsp;&emsp; Department of Computer Science and Engineering  </p>
+<p><br><br><br></p>
+<p>---------------------------------------------------- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ----------------------------------------------------<br />
+<strong>INTERNAL EXAMINER</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <strong>EXTERNAL EXAMINER</strong>  </p>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>ABSTRACT</h1>
+<p>In today’s world, peer learning and knowledge sharing systems are very important and essential for academic ecosystems. This management system is an application-based system, to manage students and mark their skill portfolios. Every organisation whether government, private, or academic institutions uses an information system to store and coordinate data of their members. This project is useful for providing an easy and responsive graphical user interface. </p>
+<p>The system uses the powerful relational database management system, data retrieval, and data manipulation. This project provides more ease for managing skill exchange data than manually maintaining and searching across disconnected chat groups. Hence it saves a lot of valuable student time. So, we can say that the project is useful for saving valuable time and reducing huge paperwork.</p>
+<p>The main objective of this integrated project is to add, update, delete, view, search, and match student skill details. The <strong>Skill Chain: Campus Peer-to-Peer Skill Exchange Platform</strong> is a comprehensive solution designed to streamline and automate various aspects of peer knowledge exchange within a university campus. This project aims to develop a user-friendly and efficient desktop platform that facilitates student authentication, maintenance of teaching and learning skill portfolios, automated two-way reciprocal matchmaking, exchange request negotiations, active partnership tracking, and instant notifications.</p>
+<p>Skill Chain captures and stores detailed student information including student names, institutional emails, salted password hashes, teaching proficiencies, and learning aspirations. This project helps in systematically organizing and querying peer data that needs to be accessed. The system was developed using foundational technologies such as <strong>MySQL database</strong> and <strong>Java (JDBC)</strong> with <strong>Java Swing GUI</strong>.</p>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>TABLE OF CONTENTS</h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">CHAPTER</th>
+<th style="text-align: left;">CONTENTS</th>
+<th style="text-align: center;">PAGE NO.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>INTRODUCTION</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• PROBLEM STATEMENT</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• PROJECT OVERVIEW</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• PURPOSE</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• SCOPE</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>FUNCTIONALITIES PROVIDED</strong></td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>SYSTEM FLOW DIAGRAM</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• DATAFLOW DIAGRAM</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• USE CASE DIAGRAM</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• ENTITY RELATIONSHIP DIAGRAM</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>MODULE DESCRIPTION</strong></td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>IMPLEMENTATION</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• JDBC CONNECTION CODE</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• MAIN LAUNCHER CODE</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• LOGIN AND REGISTRATION PAGE</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• DASHBOARD AND ACTIVE PARTNERSHIPS</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• ADD SKILL PAGE</td>
+<td style="text-align: center;">26</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• VIEW AND SEARCH SKILLS PAGE</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• DELETE SKILL PAGE</td>
+<td style="text-align: center;">34</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• RECURSIVE CATEGORY TREE TAXONOMY</td>
+<td style="text-align: center;">38</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• CAMPUS STUDENT DIRECTORY PAGE</td>
+<td style="text-align: center;">42</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• RECIPROCAL MATCHING ENGINE</td>
+<td style="text-align: center;">46</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• LEARNING REQUESTS (ACCEPT / REJECT)</td>
+<td style="text-align: center;">50</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: left;">• NOTIFICATION CENTER</td>
+<td style="text-align: center;">54</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;"><strong>CONCLUSION</strong></td>
+<td style="text-align: center;">56</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: left;"><strong>REFERENCES</strong></td>
+<td style="text-align: center;">57</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>- INTRODUCTION</h1>
+<h3>PROBLEM STATEMENT</h3>
+<p>On university campuses, students frequently seek to acquire specialized technical, mathematical, and design skills outside their formal syllabus. However, discovering compatible classmates who possess the desired skills and are simultaneously eager to learn what the first student can teach is extremely challenging. Informal inquiries across campus social media groups are unorganized, unindexed, lack confidentiality, and fail to calculate two-way reciprocal compatibility. An automated, centralized student skill exchange platform is required to manage student profiles, catalog skills, compute mutual matches, and track exchange agreements securely.</p>
+<h3>PROJECT OVERVIEW</h3>
+<p>The <strong>Skill Chain: Campus Peer-to-Peer Skill Exchange Platform</strong> is a comprehensive solution designed to streamline and automate various aspects of peer knowledge exchange within an educational institution. This project aims to develop a user-friendly and efficient desktop platform that facilitates student authentication, maintenance of personal skill inventories (skills offered to teach and skills sought to learn), automated two-way reciprocal matchmaking, proposal requests negotiation, active partnership tracking, and real-time notification alerts.</p>
+<p>Skill Chain captures and securely stores detailed student information including student names, verified university emails, cryptographically salted password hashes, and skill-type mappings. Through an automated relational <strong>Reciprocal Matching Engine</strong>, the platform pairs students when:
+$$\text{Student A teaches what Student B wants to learn} \quad \land \quad \text{Student B teaches what Student A wants to learn}$$
+This project helps in systematically organizing and querying student data that needs to be accessed, ensuring zero monetary cost for peer learning.</p>
+<h3>PURPOSE</h3>
+<p>The system is aimed at total user-friendliness as well as efficient management of varied tasks:
+* To centralize and organize student skill portfolios in a systematic manner and to facilitate easy access to accurate and up-to-date peer data, reducing manual errors and ensuring data integrity.
+* To automate the identification of reciprocal exchange partners, eliminating days of manual inquiries.
+* To provide a structured system for creating, sending, reviewing, accepting, and declining skill exchange proposals.
+* To track active learning partnerships showing contact emails and mutual study obligations.
+* To safeguard sensitive student credentials through cryptographically salted SHA-256 password hashing.
+* To allow for potential expansion and inclusion of additional categories, ensuring the system can adapt to the evolving needs of the institution.</p>
+<h3>SCOPE</h3>
+<p>The system is aimed at total user-friendliness as well as efficient management of different tasks:
+* Capturing and storing essential student information, including student names, university emails, password hashes, and registration timestamps.
+* Providing a standardized academic catalog of skills categorized into programming, web development, data &amp; AI, and digital design.
+* Allowing students to tag skills as <code>TEACH</code> (skills offered) or <code>LEARN</code> (skills sought) with duplicate prevention.
+* Enabling students to browse a campus-wide student directory displaying classmates' teaching and learning portfolios, equipped with direct "Send Request ✉" action buttons.
+* Executing automated dual-conditional matching queries using indexed MySQL joins.
+* Managing exchange request lifecycles (<code>PENDING</code>, <code>ACCEPTED</code>, <code>REJECTED</code>) with notification indicators.
+* Designing an intuitive, aesthetic desktop interface for students and administrators using Java Swing.</p>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>- FUNCTIONALITIES PROVIDED</h1>
+<h3>FUNCTIONALITIES PROVIDED BY SKILL CHAIN PLATFORM:</h3>
+<ul>
+<li><strong>Simplifying and streamlining peer skill exchanges.</strong></li>
+<li><strong>Provide timely notifications and remainders</strong> for incoming requests and accepted swaps.</li>
+<li><strong>Easy to understand.</strong></li>
+<li><strong>Easy to access.</strong></li>
+<li><strong>Easy to handle.</strong></li>
+<li><strong>Facilitate structured learning partnerships</strong> between university students.</li>
+<li><strong>Automate reciprocal matchmaking calculations</strong> through relational multi-table self-joins.</li>
+<li><strong>Centralize student skill portfolios</strong> with full CRUD (Create, Read, Update, Delete) capabilities.</li>
+<li><strong>Prevent duplicate skill registrations</strong> through database unique constraints.</li>
+<li><strong>Safeguard student passwords</strong> with 16-byte random salt and SHA-256 cryptographic hashing.</li>
+</ul>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>- SYSTEM FLOW DIAGRAM</h1>
+<p>System flow diagram helps in understanding the flow of information and processes within the system. The below displays such a representation for the project on <strong>Skill Chain: Campus Peer-to-Peer Skill Exchange Platform</strong>.</p>
+<p><br></p>
+<h3>DATAFLOW DIAGRAM</h3>
+<p>A Data Flow Diagram (DFD) is a visual way to show how data moves through a system or process. The below displays such a representation for the project on Skill Chain.</p>
+<pre><code class="language-mermaid">flowchart TD
+    User[&quot;Student User&quot;] --&gt;|1. Credentials / Sign-in| P_Login[&quot;Process: Login / Register&quot;]
+    P_Login --&gt;|Verify / Store| DB_Users[(&quot;Table: users&quot;)]
+
+    User --&gt;|2. Manage Skills| P_Skills[&quot;Process: Add / Remove / View Skills&quot;]
+    P_Skills --&gt;|Update Portfolio| DB_UserSkills[(&quot;Table: user_skills&quot;)]
+    DB_Skills[(&quot;Table: skills&quot;)] --&gt;|Catalog Lookup| P_Skills
+
+    User --&gt;|3. Browse Directory &amp; Matches| P_Match[&quot;Process: Reciprocal Matching Engine&quot;]
+    DB_UserSkills --&gt;|Read Portfolios| P_Match
+    P_Match --&gt;|Display Mutual Pairs| User
+
+    User --&gt;|4. Send / Respond Proposal| P_Requests[&quot;Process: Exchange Requests Management&quot;]
+    P_Requests --&gt;|Insert / Update Status| DB_Requests[(&quot;Table: learning_requests&quot;)]
+    DB_Requests --&gt;|Live Status &amp; Alerts| User
+</code></pre>
+<p><br></p>
+<h3>USE CASE DIAGRAM</h3>
+<p>A use case diagram is a visual representation that depicts the interactions between actors (users) and a system, illustrating various ways the system can be utilized or the functionalities it offers. The below displays such a representation for the project on Skill Chain.</p>
+<pre><code class="language-mermaid">flowchart LR
+    Student((Student Member))
+
+    subgraph SkillChainSystem[&quot;Skill Chain System&quot;]
+        UC1[&quot;Login to System&quot;]
+        UC2[&quot;Register New Account&quot;]
+        UC3[&quot;View Dashboard &amp; Metrics&quot;]
+        UC4[&quot;Add Skill (TEACH / LEARN)&quot;]
+        UC5[&quot;View / Search My Skills&quot;]
+        UC6[&quot;Remove Skill from Portfolio&quot;]
+        UC7[&quot;View Recursive Category Tree&quot;]
+        UC8[&quot;Browse Campus Student Directory&quot;]
+        UC9[&quot;View Reciprocal Matches&quot;]
+        UC10[&quot;Send Exchange Proposal&quot;]
+        UC11[&quot;Accept / Reject Learning Request&quot;]
+        UC12[&quot;View Notifications&quot;]
+        UC13[&quot;Exit System / Sign Out&quot;]
+    end
+
+    Student --&gt; UC1
+    Student --&gt; UC2
+    Student --&gt; UC3
+    Student --&gt; UC4
+    Student --&gt; UC5
+    Student --&gt; UC6
+    Student --&gt; UC7
+    Student --&gt; UC8
+    Student --&gt; UC9
+    Student --&gt; UC10
+    Student --&gt; UC11
+    Student --&gt; UC12
+    Student --&gt; UC13
+</code></pre>
+<h4>Actor: Student Member Use Cases</h4>
+<ul>
+<li><strong>Login to System – Description:</strong> Allows an existing student to securely authenticate using registered university email and password.</li>
+<li><strong>Register New Account – Description:</strong> Allows a new student to create a profile with verified institutional email and confirmed password.</li>
+<li><strong>View Dashboard &amp; Metrics – Description:</strong> Displays live metric counters for skills taught, skills learned, reciprocal matches, and exchange requests alongside active study partnerships.</li>
+<li><strong>Add Skill – Description:</strong> Allows a student to add a new skill to their profile designated as <code>TEACH</code> or <code>LEARN</code>.</li>
+<li><strong>View / Search My Skills – Description:</strong> Enables a student to view and filter their declared skill inventory.</li>
+<li><strong>Remove Skill – Description:</strong> Permits a student to delete an existing skill association from their portfolio.</li>
+<li><strong>View Recursive Category Tree – Description:</strong> Renders the academic taxonomy tree recursively.</li>
+<li><strong>Browse Campus Student Directory – Description:</strong> Displays all registered classmates, emails, and skill portfolios with direct proposal triggers.</li>
+<li><strong>View Reciprocal Matches – Description:</strong> Automatically calculates and displays students who share two-way teaching-learning synergy.</li>
+<li><strong>Send Exchange Proposal – Description:</strong> Dispatches a formal exchange invitation to a classmate.</li>
+<li><strong>Accept / Reject Request – Description:</strong> Allows receiving students to approve or decline incoming study proposals.</li>
+<li><strong>View Notifications – Description:</strong> Opens dynamic alerts regarding accepted swaps and incoming invitations.</li>
+<li><strong>Exit System – Description:</strong> Allows a student to log out or exit the desktop application safely.</li>
+</ul>
+<p><br></p>
+<h3>ENTITY RELATIONSHIP DIAGRAM</h3>
+<p>An entity-relationship diagram (ERD) is a visual representation illustrating the relationships between different entities within a database system. The below displays such a representation for the project on Skill Chain.</p>
+<pre><code class="language-mermaid">erDiagram
+    USERS ||--o{ USER_SKILLS : &quot;has&quot;
+    SKILLS ||--o{ USER_SKILLS : &quot;categorized_in&quot;
+    USERS ||--o{ LEARNING_REQUESTS : &quot;sends (sender_id)&quot;
+    USERS ||--o{ LEARNING_REQUESTS : &quot;receives (receiver_id)&quot;
+    SKILLS ||--o{ LEARNING_REQUESTS : &quot;offers (offered_skill_id)&quot;
+    SKILLS ||--o{ LEARNING_REQUESTS : &quot;requests (requested_skill_id)&quot;
+
+    USERS {
+        int user_id PK
+        varchar name
+        varchar email UK
+        varchar password_hash
+        varchar salt
+        timestamp created_at
+    }
+
+    SKILLS {
+        int skill_id PK
+        varchar skill_name UK
+        varchar category
+    }
+
+    USER_SKILLS {
+        int user_skill_id PK
+        int user_id FK
+        int skill_id FK
+        enum skill_type &quot;TEACH, LEARN&quot;
+        timestamp created_at
+    }
+
+    LEARNING_REQUESTS {
+        int request_id PK
+        int sender_id FK
+        int receiver_id FK
+        int offered_skill_id FK
+        int requested_skill_id FK
+        enum status &quot;PENDING, ACCEPTED, REJECTED&quot;
+        timestamp created_at
+    }
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>- MODULE DESCRIPTION</h1>
+<p>The different types of modules present in this project are:</p>
+<h3>LOGIN &amp; REGISTRATION MODULE:</h3>
+<p>In this section, students can sign in or register new accounts. During registration, the student's name, email, and confirmed password are validated. A cryptographically secure 16-byte random salt is generated, and a 64-character SHA-256 hash is computed. During login, candidate credentials are verified using constant-time comparison to protect against timing attacks.</p>
+<h3>STUDENT DASHBOARD &amp; ACTIVE PARTNERSHIPS MODULE:</h3>
+<p>In this section, students can view their primary summary dashboard. Four elevated metric cards display live counters for: <em>Skills I Teach</em>, <em>Skills I Learn</em>, <em>Reciprocal Matches</em>, and <em>Exchange Requests</em>. An <em>Active Learning Status Tracker</em> displays all accepted study partnerships showing classmate contact details and learning commitments.</p>
+<h3>ADD SKILL MODULE:</h3>
+<p>In this section, students can add skills to their portfolio. The student selects a skill from the standardized catalog (or enters a custom skill) and tags it as <code>TEACH</code> (Offering to mentor) or <code>LEARN</code> (Seeking to acquire). While adding the skill into the list, the system checks for uniqueness to prevent duplicate skill-type records.</p>
+<h3>VIEW &amp; SEARCH SKILLS MODULE:</h3>
+<p>In this section, students can view their current skill inventory. A formatted table displays skill ID, skill name, category, exchange type (<code>TEACH</code> in green, <code>LEARN</code> in blue), and date added. A search bar and category dropdown allow students to filter their portfolio dynamically.</p>
+<h3>DELETE SKILL MODULE:</h3>
+<p>In this section, students can delete a skill from their portfolio. The system verifies that the student owns the record before deleting it from MySQL, ensuring cascade safety and immediate dashboard metric recalculation.</p>
+<h3>RECURSIVE CATEGORY TREE TAXONOMY MODULE:</h3>
+<p>In this section, students can view the hierarchical taxonomy of academic skills. The system builds an N-ary tree data structure and utilizes a recursive algorithm to traverse and print nested domains, subdomains, and skills with clean indentations.</p>
+<h3>CAMPUS STUDENT DIRECTORY MODULE:</h3>
+<p>In this section, students can browse all registered classmates across campus. Each classmate card displays their name, university email, skills they teach, skills they want to learn, and an immediate <strong>"Send Request ✉"</strong> button.</p>
+<h3>RECIPROCAL MATCHING ENGINE MODULE:</h3>
+<p>In this section, the system executes an automated 4-table relational self-join query to identify two-way mutual matches where Student A teaches what Student B seeks, and Student B teaches what Student A seeks.</p>
+<h3>LEARNING REQUESTS MODULE:</h3>
+<p>In this section, students can manage incoming and outgoing exchange proposals. Students can click <strong>"Accept ✓"</strong> to confirm an active partnership or <strong>"Reject ✕"</strong> to decline a proposal.</p>
+<h3>NOTIFICATION CENTER MODULE:</h3>
+<p>In this section, a top-bar notification bell displays unread counts and opens a modal dialog listing recent alerts regarding accepted swaps and incoming requests.</p>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>- IMPLEMENTATION</h1>
+<p><br></p>
+<h3>JDBC CONNECTION CODE :</h3>
+<p><code>DatabaseConnection.java</code> establishes secure JDBC database connectivity using credentials stored in external <code>config.properties</code>.</p>
+<pre><code class="language-java">package com.skillchain.util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public final class DatabaseConnection {
+
+    private static final String CONFIG_FILE_NAME = &quot;config.properties&quot;;
+    private static String dbUrl;
+    private static String dbUser;
+    private static String dbPassword;
+    private static boolean initialized = false;
+
+    private DatabaseConnection() {}
+
+    private static synchronized void initialize() {
+        if (initialized) return;
+
+        Properties properties = new Properties();
+        File externalConfigFile = new File(CONFIG_FILE_NAME);
+
+        try {
+            if (externalConfigFile.exists()) {
+                try (InputStream fis = new FileInputStream(externalConfigFile)) {
+                    properties.load(fis);
+                }
+            } else {
+                try (InputStream cis = DatabaseConnection.class.getClassLoader().getResourceAsStream(CONFIG_FILE_NAME)) {
+                    if (cis != null) {
+                        properties.load(cis);
+                    } else {
+                        throw new DatabaseException(&quot;Configuration file 'config.properties' not found!&quot;);
+                    }
+                }
+            }
+
+            dbUrl = properties.getProperty(&quot;db.url&quot;);
+            dbUser = properties.getProperty(&quot;db.user&quot;);
+            dbPassword = properties.getProperty(&quot;db.password&quot;, &quot;&quot;);
+
+            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+            initialized = true;
+
+        } catch (Exception e) {
+            throw new DatabaseException(&quot;Failed to read database configuration: &quot; + e.getMessage(), e);
+        }
+    }
+
+    public static Connection getConnection() throws SQLException {
+        if (!initialized) {
+            initialize();
+        }
+        return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+    }
+
+    public static boolean testConnection() {
+        try (Connection conn = getConnection()) {
+            return conn != null &amp;&amp; !conn.isClosed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}
+</code></pre>
+<p><br></p>
+<h3>MAIN LAUNCHER CODE :</h3>
+<p><code>Main.java</code> boots the application on the Swing Event Dispatch Thread.</p>
+<pre><code class="language-java">package com.skillchain;
+
+import com.skillchain.ui.LoginRegisterFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
+public class Main {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -&gt; {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception ignored) {}
+            new LoginRegisterFrame().setVisible(true);
+        });
+    }
+}
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>LOGIN PAGE :</h3>
+<p align="center">
+  <img src="screenshots/01_Login_Screen.png" width="550" alt="Login Page"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.model.User;
+import com.skillchain.service.UserService;
+import com.skillchain.util.InvalidLoginException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class LoginPanel extends JPanel implements ActionListener {
+    private ModernTextField txtLoginEmail;
+    private ModernPasswordField txtLoginPassword;
+    private ModernButton btnLogin;
+    private final UserService userService = new UserService();
+    private final JFrame parentFrame;
+
+    public LoginPanel(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setOpaque(false);
+
+        JLabel lblEmail = new JLabel(&quot;University Email&quot;);
+        lblEmail.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 13));
+        add(lblEmail);
+
+        txtLoginEmail = new ModernTextField();
+        add(txtLoginEmail);
+
+        JLabel lblPass = new JLabel(&quot;Password&quot;);
+        lblPass.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 13));
+        add(lblPass);
+
+        txtLoginPassword = new ModernPasswordField();
+        add(txtLoginPassword);
+
+        btnLogin = new ModernButton(&quot;Sign In to Skill Chain&quot;, ModernButton.ButtonStyle.PRIMARY);
+        btnLogin.addActionListener(this);
+        add(btnLogin);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String email = txtLoginEmail.getText().trim();
+        String password = new String(txtLoginPassword.getPassword());
+
+        try {
+            User user = userService.login(email, password);
+            JOptionPane.showMessageDialog(parentFrame, &quot;Login Successful! Welcome, &quot; + user.getName(), 
+                                          &quot;Success&quot;, JOptionPane.INFORMATION_MESSAGE);
+            new MainFrame(user, parentFrame).setVisible(true);
+            parentFrame.setVisible(false);
+        } catch (InvalidLoginException ex) {
+            JOptionPane.showMessageDialog(parentFrame, ex.getMessage(), &quot;Authentication Failed&quot;, JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(parentFrame, &quot;Database Connection Error: &quot; + ex.getMessage(), &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+</code></pre>
+<h4>JDBC QUERY CODE (AUTHENTICATION):</h4>
+<pre><code class="language-sql">-- User Lookup query executed in UserDaoImpl.java:
+SELECT user_id, name, email, password_hash, salt, created_at 
+FROM users 
+WHERE LOWER(email) = ?;
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>REGISTRATION PAGE :</h3>
+<p align="center">
+  <img src="screenshots/02_Registration_Screen.png" width="550" alt="Registration Page"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.model.User;
+import com.skillchain.service.UserService;
+import com.skillchain.util.DuplicateEmailException;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class RegisterPanel extends JPanel implements ActionListener {
+    private ModernTextField txtRegName, txtRegEmail;
+    private ModernPasswordField txtRegPassword, txtRegConfirmPassword;
+    private ModernButton btnRegister;
+    private final UserService userService = new UserService();
+    private final JFrame parentFrame;
+
+    public RegisterPanel(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setOpaque(false);
+
+        add(new JLabel(&quot;Full Name&quot;));
+        txtRegName = new ModernTextField();
+        add(txtRegName);
+
+        add(new JLabel(&quot;University Email&quot;));
+        txtRegEmail = new ModernTextField();
+        add(txtRegEmail);
+
+        add(new JLabel(&quot;Password&quot;));
+        txtRegPassword = new ModernPasswordField();
+        add(txtRegPassword);
+
+        add(new JLabel(&quot;Confirm Password&quot;));
+        txtRegConfirmPassword = new ModernPasswordField();
+        add(txtRegConfirmPassword);
+
+        btnRegister = new ModernButton(&quot;Create Student Account&quot;, ModernButton.ButtonStyle.PRIMARY);
+        btnRegister.addActionListener(this);
+        add(btnRegister);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String name = txtRegName.getText().trim();
+        String email = txtRegEmail.getText().trim();
+        String pass = new String(txtRegPassword.getPassword());
+        String confirm = new String(txtRegConfirmPassword.getPassword());
+
+        if (!pass.equals(confirm)) {
+            JOptionPane.showMessageDialog(parentFrame, &quot;Passwords do not match!&quot;, &quot;Validation Error&quot;, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            User newUser = userService.register(name, email, pass);
+            JOptionPane.showMessageDialog(parentFrame, &quot;Student Account Created Successfully! Please Sign In.&quot;, 
+                                          &quot;Success&quot;, JOptionPane.INFORMATION_MESSAGE);
+            txtRegPassword.setText(&quot;&quot;);
+            txtRegConfirmPassword.setText(&quot;&quot;);
+        } catch (DuplicateEmailException ex) {
+            JOptionPane.showMessageDialog(parentFrame, ex.getMessage(), &quot;Duplicate Account&quot;, JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(parentFrame, &quot;Error: &quot; + ex.getMessage(), &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+</code></pre>
+<h4>JDBC INSERT CODE (REGISTRATION):</h4>
+<pre><code class="language-sql">-- User Insert with Salted SHA-256 Hash executed in UserDaoImpl.java:
+INSERT INTO users (name, email, password_hash, salt) 
+VALUES (?, ?, ?, ?);
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>DASHBOARD PAGE :</h3>
+<p align="center">
+  <img src="screenshots/03_Dashboard_Overview.png" width="750" alt="Dashboard Page"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.model.ActivePartnership;
+import com.skillchain.model.User;
+import com.skillchain.service.RequestService;
+import com.skillchain.service.SkillService;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.util.List;
+
+public class DashboardPanel extends JPanel {
+    private final User currentUser;
+    private final SkillService skillService = new SkillService();
+    private final RequestService requestService = new RequestService();
+
+    private JLabel lblDashTeach, lblDashLearn, lblDashMatches, lblDashRequests;
+    private JPanel activePartnershipsContainer;
+
+    public DashboardPanel(User user) {
+        this.currentUser = user;
+        setLayout(new BorderLayout(0, 20));
+        setBackground(new Color(248, 250, 252));
+        setBorder(new EmptyBorder(24, 24, 24, 24));
+
+        // Metric KPI Grid
+        JPanel metricsGrid = new JPanel(new GridLayout(1, 4, 16, 0));
+        metricsGrid.setOpaque(false);
+        metricsGrid.add(createMetricCard(&quot;Skills I Teach&quot;, lblDashTeach = new JLabel(&quot;0&quot;), new Color(5, 150, 105)));
+        metricsGrid.add(createMetricCard(&quot;Skills I Learn&quot;, lblDashLearn = new JLabel(&quot;0&quot;), new Color(37, 99, 235)));
+        metricsGrid.add(createMetricCard(&quot;Reciprocal Matches&quot;, lblDashMatches = new JLabel(&quot;0&quot;), new Color(217, 119, 6)));
+        metricsGrid.add(createMetricCard(&quot;Exchange Requests&quot;, lblDashRequests = new JLabel(&quot;0&quot;), new Color(147, 51, 234)));
+        add(metricsGrid, BorderLayout.NORTH);
+
+        // Active Partnerships Section
+        activePartnershipsContainer = new JPanel();
+        activePartnershipsContainer.setLayout(new BoxLayout(activePartnershipsContainer, BoxLayout.Y_AXIS));
+        activePartnershipsContainer.setBackground(Color.WHITE);
+        add(new JScrollPane(activePartnershipsContainer), BorderLayout.CENTER);
+    }
+
+    private JPanel createMetricCard(String title, JLabel valueLabel, Color accentColor) {
+        JPanel card = new JPanel(new BorderLayout());
+        card.setBackground(Color.WHITE);
+        card.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
+            new EmptyBorder(16, 18, 16, 18)
+        ));
+        JLabel lblTitle = new JLabel(title);
+        lblTitle.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 12));
+        lblTitle.setForeground(new Color(100, 116, 139));
+        valueLabel.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 28));
+        valueLabel.setForeground(accentColor);
+        card.add(lblTitle, BorderLayout.NORTH);
+        card.add(valueLabel, BorderLayout.CENTER);
+        return card;
+    }
+}
+</code></pre>
+<h4>JDBC QUERY CODE (ACTIVE PARTNERSHIPS):</h4>
+<pre><code class="language-sql">-- Querying accepted ongoing learning partnerships:
+SELECT lr.request_id,
+       CASE WHEN lr.sender_id = ? THEN u_recv.name ELSE u_send.name END AS partner_name,
+       CASE WHEN lr.sender_id = ? THEN u_recv.email ELSE u_send.email END AS partner_email,
+       CASE WHEN lr.sender_id = ? THEN s_off.skill_name ELSE s_req.skill_name END AS you_teach,
+       CASE WHEN lr.sender_id = ? THEN s_req.skill_name ELSE s_off.skill_name END AS partner_teaches,
+       lr.status, lr.created_at
+FROM learning_requests lr
+JOIN users u_send ON lr.sender_id = u_send.user_id
+JOIN users u_recv ON lr.receiver_id = u_recv.user_id
+JOIN skills s_off ON lr.offered_skill_id = s_off.skill_id
+JOIN skills s_req ON lr.requested_skill_id = s_req.skill_id
+WHERE (lr.sender_id = ? OR lr.receiver_id = ?) AND lr.status = 'ACCEPTED'
+ORDER BY lr.created_at DESC;
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>ADD SKILL PAGE :</h3>
+<p align="center">
+  <img src="screenshots/04_My_Skills_Portfolio.png" width="750" alt="Add Skill Portfolio"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.model.Skill;
+import com.skillchain.model.SkillType;
+import com.skillchain.service.SkillService;
+import com.skillchain.util.DuplicateSkillException;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+public class AddSkillDialog extends JDialog implements ActionListener {
+    private JComboBox&lt;String&gt; cmbSkills;
+    private JRadioButton rbTeach, rbLearn;
+    private JButton btnAdd, btnCancel;
+    private final SkillService skillService = new SkillService();
+    private final int userId;
+    private final Runnable onSuccessCallback;
+
+    public AddSkillDialog(JFrame parent, int userId, Runnable onSuccessCallback) {
+        super(parent, &quot;Add Skill to Portfolio&quot;, true);
+        this.userId = userId;
+        this.onSuccessCallback = onSuccessCallback;
+        setSize(420, 280);
+        setLocationRelativeTo(parent);
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        add(new JLabel(&quot;Select Skill:&quot;));
+        cmbSkills = new JComboBox&lt;&gt;();
+        loadSkillCatalog();
+        add(cmbSkills);
+
+        add(new JLabel(&quot;Exchange Intent:&quot;));
+        rbTeach = new JRadioButton(&quot;I can TEACH this skill&quot;, true);
+        rbLearn = new JRadioButton(&quot;I want to LEARN this skill&quot;);
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(rbTeach);
+        bg.add(rbLearn);
+        add(rbTeach);
+        add(rbLearn);
+
+        btnAdd = new JButton(&quot;Add Skill&quot;);
+        btnAdd.addActionListener(this);
+        add(btnAdd);
+    }
+
+    private void loadSkillCatalog() {
+        try {
+            List&lt;Skill&gt; catalog = skillService.getAllCatalogSkills();
+            for (Skill s : catalog) {
+                cmbSkills.addItem(s.getSkillName());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String skillName = (String) cmbSkills.getSelectedItem();
+        SkillType type = rbTeach.isSelected() ? SkillType.TEACH : SkillType.LEARN;
+
+        try {
+            skillService.addSkillToUser(userId, skillName, type);
+            JOptionPane.showMessageDialog(this, &quot;Skill added successfully!&quot;, &quot;Success&quot;, JOptionPane.INFORMATION_MESSAGE);
+            if (onSuccessCallback != null) onSuccessCallback.run();
+            dispose();
+        } catch (DuplicateSkillException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), &quot;Duplicate Skill&quot;, JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, &quot;Error: &quot; + ex.getMessage(), &quot;Database Error&quot;, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+</code></pre>
+<h4>JDBC INSERT CODE (ADD SKILL):</h4>
+<pre><code class="language-sql">-- Inserting user skill mapping into junction table:
+INSERT INTO user_skills (user_id, skill_id, skill_type) 
+VALUES (?, ?, ?);
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>VIEW AND SEARCH SKILLS PAGE :</h3>
+<p align="center">
+  <img src="screenshots/04_My_Skills_Portfolio.png" width="750" alt="View and Search Skills"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.model.UserSkill;
+import com.skillchain.service.SkillService;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
+public class SkillTableManager {
+    private final JTable tblSkills;
+    private final DefaultTableModel tableModel;
+    private final SkillService skillService = new SkillService();
+
+    public SkillTableManager(JTable table, DefaultTableModel model) {
+        this.tblSkills = table;
+        this.tableModel = model;
+    }
+
+    public void loadSkills(int userId, String keywordFilter) {
+        try {
+            List&lt;UserSkill&gt; skills = skillService.getUserSkills(userId);
+            tableModel.setRowCount(0);
+
+            for (UserSkill us : skills) {
+                if (keywordFilter != null &amp;&amp; !keywordFilter.isEmpty()) {
+                    if (!us.getSkillName().toLowerCase().contains(keywordFilter.toLowerCase()) &amp;&amp;
+                        !us.getCategory().toLowerCase().contains(keywordFilter.toLowerCase())) {
+                        continue;
+                    }
+                }
+
+                tableModel.addRow(new Object[]{
+                    us.getUserSkillId(),
+                    us.getSkillName(),
+                    us.getCategory(),
+                    us.getSkillType().name(),
+                    us.getCreatedAt() != null ? us.getCreatedAt().toString() : &quot;N/A&quot;
+                });
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<h4>JDBC SELECT CODE (VIEW SKILLS):</h4>
+<pre><code class="language-sql">-- Querying personal skill portfolio with category join:
+SELECT us.user_skill_id, us.user_id, us.skill_id, s.skill_name, s.category, 
+       us.skill_type, us.created_at 
+FROM user_skills us 
+JOIN skills s ON us.skill_id = s.skill_id 
+WHERE us.user_id = ? 
+ORDER BY us.skill_type ASC, s.skill_name ASC;
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>DELETE SKILL PAGE :</h3>
+<p align="center">
+  <img src="screenshots/04_My_Skills_Portfolio.png" width="750" alt="Delete Skill"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.service.SkillService;
+import javax.swing.*;
+
+public class SkillDeleteHandler {
+    private final SkillService skillService = new SkillService();
+
+    public void handleDeleteSkill(JFrame parent, JTable tblSkills, int userId, Runnable onDeletedCallback) {
+        int selectedRow = tblSkills.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(parent, &quot;Please select a skill from the table to remove.&quot;, 
+                                          &quot;No Skill Selected&quot;, JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int userSkillId = (int) tblSkills.getValueAt(selectedRow, 0);
+        String skillName = (String) tblSkills.getValueAt(selectedRow, 1);
+
+        int confirm = JOptionPane.showConfirmDialog(parent, 
+            &quot;Are you sure you want to remove '&quot; + skillName + &quot;' from your portfolio?&quot;, 
+            &quot;Confirm Deletion&quot;, JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                skillService.removeSkillFromUser(userSkillId, userId);
+                JOptionPane.showMessageDialog(parent, &quot;Skill removed successfully!&quot;, &quot;Success&quot;, JOptionPane.INFORMATION_MESSAGE);
+                if (onDeletedCallback != null) onDeletedCallback.run();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(parent, &quot;Failed to remove skill: &quot; + ex.getMessage(), &quot;Database Error&quot;, JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+}
+</code></pre>
+<h4>JDBC DELETE CODE (DELETE SKILL):</h4>
+<pre><code class="language-sql">-- Enforcing ownership during deletion:
+DELETE FROM user_skills 
+WHERE user_skill_id = ? AND user_id = ?;
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>RECURSIVE CATEGORY TREE TAXONOMY :</h3>
+<p align="center">
+  <img src="screenshots/05_Skill_Category_Tree_Hierarchy.png" width="550" alt="Skill Category Hierarchy"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.util;
+
+import com.skillchain.model.SkillCategoryNode;
+
+public final class SkillTreeUtil {
+    // RECURSION IMPLEMENTATION: Depth-First Search tree traversal
+    public static void traverseTreeRecursive(SkillCategoryNode node, int depth, StringBuilder buffer) {
+        if (node == null) return; // Base Case
+
+        String indent = &quot;   &quot;.repeat(depth);
+        buffer.append(indent).append(&quot;📂 &quot;).append(node.getName()).append(&quot;
+&quot;);
+
+        for (String skill : node.getSkills()) {
+            buffer.append(indent).append(&quot;   ├── ⚡ &quot;).append(skill).append(&quot;
+&quot;);
+        }
+
+        // Recursive Step: Process child categories
+        for (SkillCategoryNode child : node.getChildren()) {
+            traverseTreeRecursive(child, depth + 1, buffer);
+        }
+    }
+}
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>CAMPUS STUDENT DIRECTORY PAGE :</h3>
+<p align="center">
+  <img src="screenshots/06_Campus_Directory.png" width="750" alt="Campus Directory"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.model.PeerStudent;
+import com.skillchain.service.RequestService;
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
+public class PeerDirectoryPanel extends JPanel {
+    private final RequestService requestService = new RequestService();
+    private final int currentUserId;
+
+    public PeerDirectoryPanel(int userId) {
+        this.currentUserId = userId;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBackground(new Color(248, 250, 252));
+    }
+
+    public void loadPeers() {
+        removeAll();
+        try {
+            List&lt;PeerStudent&gt; peers = requestService.getPeerDirectory(currentUserId);
+            for (PeerStudent peer : peers) {
+                JPanel card = new JPanel(new BorderLayout());
+                card.setBackground(Color.WHITE);
+                card.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
+                    BorderFactory.createEmptyBorder(12, 16, 12, 16)
+                ));
+
+                JLabel lblName = new JLabel(peer.getName() + &quot; (&quot; + peer.getEmail() + &quot;)&quot;);
+                lblName.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 14));
+
+                JLabel lblSkills = new JLabel(&quot;Teaches: &quot; + peer.getTeachingSkills() + &quot; | Seeks: &quot; + peer.getLearningSkills());
+                lblSkills.setFont(new Font(&quot;Segoe UI&quot;, Font.PLAIN, 12));
+                lblSkills.setForeground(new Color(100, 116, 139));
+
+                JButton btnSend = new JButton(&quot;Send Request ✉&quot;);
+                btnSend.setBackground(new Color(37, 99, 235));
+                btnSend.setForeground(Color.WHITE);
+
+                card.add(lblName, BorderLayout.NORTH);
+                card.add(lblSkills, BorderLayout.CENTER);
+                card.add(btnSend, BorderLayout.EAST);
+                add(card);
+                add(Box.createRigidArea(new Dimension(0, 8)));
+            }
+            revalidate();
+            repaint();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<h4>JDBC QUERY CODE (STUDENT DIRECTORY WITH AGGREGATED SKILLS):</h4>
+<pre><code class="language-sql">-- Aggregating peer student emails and skills using GROUP_CONCAT:
+SELECT u.user_id, u.name, u.email,
+       COALESCE(GROUP_CONCAT(DISTINCT CASE WHEN us.skill_type = 'TEACH' THEN s.skill_name END SEPARATOR ', '), 'None listed yet') AS teach_skills,
+       COALESCE(GROUP_CONCAT(DISTINCT CASE WHEN us.skill_type = 'LEARN' THEN s.skill_name END SEPARATOR ', '), 'None listed yet') AS learn_skills
+FROM users u
+LEFT JOIN user_skills us ON u.user_id = us.user_id
+LEFT JOIN skills s ON us.skill_id = s.skill_id
+WHERE u.user_id != ?
+GROUP BY u.user_id, u.name, u.email
+ORDER BY u.name ASC;
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>RECIPROCAL MATCHING ENGINE :</h3>
+<p align="center">
+  <img src="screenshots/07_Reciprocal_Matches.png" width="750" alt="Reciprocal Matches"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.service;
+
+import com.skillchain.model.ReciprocalMatch;
+import com.skillchain.util.DatabaseConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MatchingService {
+
+    private static final String RECIPROCAL_MATCH_SQL =
+        &quot;SELECT &quot; +
+        &quot;    u_partner.user_id AS partner_id, &quot; +
+        &quot;    u_partner.name AS partner_name, &quot; +
+        &quot;    u_partner.email AS partner_email, &quot; +
+        &quot;    s_offer.skill_id AS user_offered_id, &quot; +
+        &quot;    s_offer.skill_name AS user_offered_name, &quot; +
+        &quot;    s_partner.skill_id AS partner_offered_id, &quot; +
+        &quot;    s_partner.skill_name AS partner_offered_name &quot; +
+        &quot;FROM user_skills my_teach &quot; +
+        &quot;JOIN user_skills partner_learn &quot; +
+        &quot;    ON my_teach.skill_id = partner_learn.skill_id &quot; +
+        &quot;   AND my_teach.skill_type = 'TEACH' &quot; +
+        &quot;   AND partner_learn.skill_type = 'LEARN' &quot; +
+        &quot;   AND partner_learn.user_id != my_teach.user_id &quot; +
+        &quot;JOIN user_skills partner_teach &quot; +
+        &quot;    ON partner_teach.user_id = partner_learn.user_id &quot; +
+        &quot;   AND partner_teach.skill_type = 'TEACH' &quot; +
+        &quot;JOIN user_skills my_learn &quot; +
+        &quot;    ON my_learn.skill_id = partner_teach.skill_id &quot; +
+        &quot;   AND my_learn.user_id = my_teach.user_id &quot; +
+        &quot;   AND my_learn.skill_type = 'LEARN' &quot; +
+        &quot;JOIN users u_partner ON u_partner.user_id = partner_learn.user_id &quot; +
+        &quot;JOIN skills s_offer ON s_offer.skill_id = my_teach.skill_id &quot; +
+        &quot;JOIN skills s_partner ON s_partner.skill_id = partner_teach.skill_id &quot; +
+        &quot;WHERE my_teach.user_id = ? &quot; +
+        &quot;ORDER BY u_partner.name ASC&quot;;
+
+    public List&lt;ReciprocalMatch&gt; findReciprocalMatches(int currentUserId) throws SQLException {
+        List&lt;ReciprocalMatch&gt; matches = new ArrayList&lt;&gt;();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(RECIPROCAL_MATCH_SQL)) {
+
+            stmt.setInt(1, currentUserId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    matches.add(new ReciprocalMatch(
+                        rs.getInt(&quot;partner_id&quot;),
+                        rs.getString(&quot;partner_name&quot;),
+                        rs.getString(&quot;partner_email&quot;),
+                        rs.getInt(&quot;user_offered_id&quot;),
+                        rs.getString(&quot;user_offered_name&quot;),
+                        &quot;&quot;,
+                        rs.getInt(&quot;partner_offered_id&quot;),
+                        rs.getString(&quot;partner_offered_name&quot;),
+                        &quot;&quot;
+                    ));
+                }
+            }
+        }
+        return matches;
+    }
+}
+</code></pre>
+<h4>JDBC 4-TABLE RELATIONAL SELF-JOIN CODE:</h4>
+<pre><code class="language-sql">-- Dual-conditional mutual matching relational query:
+SELECT u_partner.user_id AS partner_id,
+       u_partner.name AS partner_name,
+       u_partner.email AS partner_email,
+       s_offer.skill_name AS you_teach,
+       s_partner.skill_name AS partner_teaches
+FROM user_skills my_teach
+JOIN user_skills partner_learn 
+    ON my_teach.skill_id = partner_learn.skill_id 
+   AND my_teach.skill_type = 'TEACH' 
+   AND partner_learn.skill_type = 'LEARN' 
+   AND partner_learn.user_id != my_teach.user_id
+JOIN user_skills partner_teach 
+    ON partner_teach.user_id = partner_learn.user_id 
+   AND partner_teach.skill_type = 'TEACH'
+JOIN user_skills my_learn 
+    ON my_learn.skill_id = partner_teach.skill_id 
+   AND my_learn.user_id = my_teach.user_id 
+   AND my_learn.skill_type = 'LEARN'
+JOIN users u_partner ON u_partner.user_id = partner_learn.user_id
+JOIN skills s_offer ON s_offer.skill_id = my_teach.skill_id
+JOIN skills s_partner ON s_partner.skill_id = partner_teach.skill_id
+WHERE my_teach.user_id = ?
+ORDER BY u_partner.name ASC;
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>LEARNING REQUESTS (ACCEPT / REJECT) :</h3>
+<p align="center">
+  <img src="screenshots/08_Incoming_Requests.png" width="750" alt="Incoming Learning Requests"/>
+</p>
+
+<p align="center">
+  <img src="screenshots/09_Outgoing_Requests.png" width="750" alt="Outgoing Learning Requests"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.service.RequestService;
+import javax.swing.*;
+
+public class RequestStatusHandler {
+    private final RequestService requestService = new RequestService();
+
+    public void handleAccept(JFrame parent, int requestId, Runnable onUpdatedCallback) {
+        int confirm = JOptionPane.showConfirmDialog(parent, &quot;Accept this skill exchange proposal?&quot;, 
+                                                    &quot;Confirm Partnership&quot;, JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                requestService.acceptRequest(requestId);
+                JOptionPane.showMessageDialog(parent, &quot;Proposal Accepted! Active Partnership Established.&quot;, 
+                                              &quot;Success&quot;, JOptionPane.INFORMATION_MESSAGE);
+                if (onUpdatedCallback != null) onUpdatedCallback.run();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(parent, &quot;Error updating status: &quot; + ex.getMessage(), 
+                                              &quot;Database Error&quot;, JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public void handleReject(JFrame parent, int requestId, Runnable onUpdatedCallback) {
+        int confirm = JOptionPane.showConfirmDialog(parent, &quot;Decline this skill exchange proposal?&quot;, 
+                                                    &quot;Decline Proposal&quot;, JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                requestService.rejectRequest(requestId);
+                JOptionPane.showMessageDialog(parent, &quot;Proposal Declined.&quot;, &quot;Updated&quot;, JOptionPane.INFORMATION_MESSAGE);
+                if (onUpdatedCallback != null) onUpdatedCallback.run();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(parent, &quot;Error updating status: &quot; + ex.getMessage(), 
+                                              &quot;Database Error&quot;, JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+}
+</code></pre>
+<h4>JDBC UPDATE CODE (ACCEPT / REJECT):</h4>
+<pre><code class="language-sql">-- Updating exchange request status:
+UPDATE learning_requests 
+SET status = ? 
+WHERE request_id = ?;
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h3>NOTIFICATION CENTER :</h3>
+<p align="center">
+  <img src="screenshots/10_Notifications_Center.png" width="550" alt="Notification Center"/>
+</p>
+
+<pre><code class="language-java">package com.skillchain.ui;
+
+import com.skillchain.model.AppNotification;
+import com.skillchain.service.RequestService;
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
+public class NotificationDialog extends JDialog {
+    private final RequestService requestService = new RequestService();
+
+    public NotificationDialog(JFrame parent, int userId) {
+        super(parent, &quot;Notification Center&quot;, true);
+        setSize(520, 400);
+        setLocationRelativeTo(parent);
+        setLayout(new BorderLayout());
+
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.setBackground(Color.WHITE);
+
+        try {
+            List&lt;AppNotification&gt; notifications = requestService.getNotifications(userId);
+            if (notifications.isEmpty()) {
+                container.add(new JLabel(&quot;No new notifications at this time.&quot;));
+            } else {
+                for (AppNotification n : notifications) {
+                    JPanel p = new JPanel(new BorderLayout());
+                    p.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
+                        BorderFactory.createEmptyBorder(8, 12, 8, 12)
+                    ));
+                    JLabel title = new JLabel(n.getTitle());
+                    title.setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 13));
+                    JLabel msg = new JLabel(&quot;&lt;html&gt;&quot; + n.getMessage() + &quot;&lt;/html&gt;&quot;);
+                    msg.setFont(new Font(&quot;Segoe UI&quot;, Font.PLAIN, 12));
+                    p.add(title, BorderLayout.NORTH);
+                    p.add(msg, BorderLayout.CENTER);
+                    container.add(p);
+                    container.add(Box.createRigidArea(new Dimension(0, 6)));
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        add(new JScrollPane(container), BorderLayout.CENTER);
+    }
+}
+</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>- CONCLUSION</h1>
+<p>In conclusion, our student skill exchange database management system implemented in Java using JDBC successfully addresses the core functionalities of adding new skills, removing records, updating statuses, and efficiently retrieving data when needed. The utilization of <strong>JDBC (Java Database Connectivity)</strong> allowed seamless interaction between the Java application and the MySQL database engine, ensuring robust data management and transaction security.</p>
+<p>The project emphasized the importance of adopting core <strong>Object-Oriented Programming (OOPS)</strong> principles:
+* <strong>Abstraction:</strong> separating interface contracts from database implementations (<code>Person.java</code>, <code>Searchable.java</code>).
+* <strong>Inheritance:</strong> modeling domain users cleanly through base class reuse (<code>User.java</code>, <code>PeerStudent.java</code>).
+* <strong>Encapsulation:</strong> defensive input validation and getter/setter boundaries across all models.
+* <strong>Polymorphism:</strong> compile-time method overloading (<code>search()</code>, <code>getUserSkills()</code>) and runtime dynamic method overriding (<code>getRole()</code>, <code>getSummary()</code>).
+* <strong>Data Structures &amp; Recursion:</strong> traversing nested academic category trees using depth-first recursive algorithms.
+* <strong>Application Security:</strong> cryptographically salted SHA-256 password hashing.</p>
+<p>Additionally, the project's reliance on established database management principles, as outlined in key texts, ensured a solid foundation for data integrity, 3rd Normal Form (3NF) relational design, referential cascading constraints, and multi-table join query optimization.</p>
+<p>Through this project, we gained valuable insights into Java application development, database connectivity, and the significance of adhering to best practices in software design. The system provides a user-friendly interface for managing student skill portfolios, contributing to a more efficient and collaborative peer learning process on campus.</p>
+<p><br></p>
+<hr />
+<p><br></p>
+<h1>- REFERENCES</h1>
+<ul>
+<li><strong>JAVA – The Complete Reference</strong> by ORACLE Press / Herbert Schildt.</li>
+<li><strong>Database System Concepts</strong> by Abraham Silberschatz, Henry F. Korth, and S. Sudarshan (McGraw-Hill).</li>
+<li><strong>MySQL 8.0 Reference Manual</strong> – Oracle Corporation.</li>
+<li><strong>YouTube Playlist &amp; Video Tutorials on Java JDBC Swing Architecture:</strong><br />
+  https://www.youtube.com/playlist?list=PLbKub4Jss9oUbTmeS9li_DoskYCiuvx1R</li>
+</ul>
+</body>
+</html>
